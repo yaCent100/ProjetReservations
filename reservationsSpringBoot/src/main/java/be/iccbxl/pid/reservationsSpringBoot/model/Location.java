@@ -33,6 +33,9 @@ public class Location {
     @OneToMany(targetEntity=Show.class, mappedBy="location")
     private List<Show> shows = new ArrayList<>();
 
+    @OneToMany(targetEntity=Representation.class, mappedBy="location")
+    private List<Representation> representations = new ArrayList<>();
+
 
     public Location(String slug, String designation, String address, Locality locality, String website, String
             phone) {
@@ -76,6 +79,27 @@ public class Location {
 
         return this;
     }
+
+    public Location addRepresentation(Representation representation) {
+        if(!this.representations.contains(representation)) {
+            this.representations.add(representation);
+            representation.setLocation(this);
+        }
+
+        return this;
+    }
+
+    public Location removeRepresentation(Representation representation) {
+        if(this.representations.contains(representation)) {
+            this.representations.remove(representation);
+            if(representation.getLocation().equals(this)) {
+                representation.setLocation(null);
+            }
+        }
+
+        return this;
+    }
+
 
 
 
