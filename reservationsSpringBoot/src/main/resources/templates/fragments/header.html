@@ -1,4 +1,5 @@
-<!DOCTYPE html> <html lang="fr">
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <title>Header fragment</title> </head>
@@ -15,7 +16,8 @@
                 <li th:classappend="${module == 'artists' ? 'active' : ''}">
                     <a href="#" th:href="@{/artists}">Artists</a>
                 </li>
-            </ul> </div>
+            </ul>
+        </div>
     </div>
 </header>
 </body>

@@ -6,6 +6,9 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @NoArgsConstructor(force = true, access = AccessLevel.PROTECTED)
 @Entity
@@ -26,6 +29,10 @@ public class Location {
     private Locality locality;
     private String website;
     private String phone;
+
+    @OneToMany(targetEntity=Show.class, mappedBy="location")
+    private List<Show> shows = new ArrayList<>();
+
 
     public Location(String slug, String designation, String address, Locality locality, String website, String
             phone) {
@@ -49,6 +56,27 @@ public class Location {
         this.locality = locality;
         this.locality.addLocation(this);        //emménager dans la nouvelle localité
     }
+
+    public Location addShow(Show show) {
+        if(!this.shows.contains(show)) {
+            this.shows.add(show);
+            show.setLocation(this);
+        }
+
+        return this;
+    }
+
+    public Location removeShow(Show show) {
+        if(this.shows.contains(show)) {
+            this.shows.remove(show);
+            if(show.getLocation().equals(this)) {
+                show.setLocation(null);
+            }
+        }
+
+        return this;
+    }
+
 
 
 }
