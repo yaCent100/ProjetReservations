@@ -1,4 +1,4 @@
-package be.iccbxl.pid.reservationsSpringBoot.Service;
+package be.iccbxl.pid.reservationsSpringBoot.service;
 
 import be.iccbxl.pid.reservationsSpringBoot.model.Artist;
 import be.iccbxl.pid.reservationsSpringBoot.repository.ArtistRepository;
