@@ -14,7 +14,7 @@ import java.util.List;
 public class RoleController {
 
     @Autowired
-    private RoleService roleService;
+    RoleService roleService;
 
     @GetMapping("/roles")
     public String index2(Model model) {

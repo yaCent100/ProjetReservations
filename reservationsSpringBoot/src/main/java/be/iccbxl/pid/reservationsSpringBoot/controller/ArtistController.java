@@ -13,7 +13,8 @@ import java.util.List;
 @Controller
 public class ArtistController {
 
-    @Autowired ArtistService artistService;
+    @Autowired
+    ArtistService artistService;
         @GetMapping("/artists")
         public String index(Model model) {
 

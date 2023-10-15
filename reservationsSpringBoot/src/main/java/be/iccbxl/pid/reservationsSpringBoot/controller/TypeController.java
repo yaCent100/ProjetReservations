@@ -13,7 +13,7 @@ import java.util.List;
 @Controller
 public class TypeController {
     @Autowired
-    private TypeService typeService;
+    TypeService typeService;
 
     @GetMapping("/types")
     public String index2(Model model) {
