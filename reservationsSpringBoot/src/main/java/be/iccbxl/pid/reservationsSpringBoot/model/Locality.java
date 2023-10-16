@@ -1,6 +1,8 @@
 package be.iccbxl.pid.reservationsSpringBoot.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +18,13 @@ public class Locality {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotEmpty(message = "The postalCode must not be empty.")
+    @Size(min=2, max=6, message = "The postalCode must be between 2 and 6 characters long.")
     private String postalCode;
+
+    @NotEmpty(message = "The locality must not be empty.")
+    @Size(min=2, max=60, message = "The locality must be between 2 and 60 characters long.")
     private String locality;
 
     @OneToMany( targetEntity=Location.class, mappedBy="locality" )

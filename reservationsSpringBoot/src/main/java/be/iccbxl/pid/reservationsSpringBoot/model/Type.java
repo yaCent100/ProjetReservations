@@ -1,6 +1,8 @@
 package be.iccbxl.pid.reservationsSpringBoot.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +18,9 @@ public class Type {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotEmpty(message = "The type must not be empty.")
+    @Size(min=2, max=60, message = "The type must be between 2 and 60 characters long.")
     private String type;
 
     @ManyToMany
