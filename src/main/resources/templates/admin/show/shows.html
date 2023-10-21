@@ -7,14 +7,20 @@
 
                 
                     <div layout:fragment="content">
+						<div class="text-end m-3">
+  					<button th:href="" class="btn btn-primary">Add a Show</button>
+  					</div>
 						<div class="container">
                         <h1 th:text="${title}">Liste des spectacles</h1>
 
                         <table class="table table-striped">
+							<thead>
                             <tr>
                                 <th>Nom</th>
                                 <th>Prix</th>
                             </tr>
+                            </thead>
+                            <tbody>
                             <tr th:unless="${#lists.isEmpty(shows)}" th:each="show : ${shows}">
                                 <td>
                                     <span th:text="${show.title}">Ayiti</span>
@@ -23,6 +29,7 @@
                                     <span th:text="${show.price} + ' €'">9.99 €</span>
                                 </td>
                             </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>

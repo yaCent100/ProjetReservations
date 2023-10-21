@@ -38,7 +38,7 @@ public class AdminController {
 	    model.addAttribute("shows", shows);
 	    model.addAttribute("title", "Liste des spectacles");
 
-	    return "admin/shows";
+	    return "admin/show/shows";
 	}
 	
 	@GetMapping("/admin/users")
@@ -48,7 +48,7 @@ public class AdminController {
 		model.addAttribute("users", users);
 		model.addAttribute("title", "Utilisateurs");
 		
-		return "admin/user";
+		return "admin/users";
 	}
 	
 	

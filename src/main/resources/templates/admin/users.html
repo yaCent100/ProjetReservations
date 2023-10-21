@@ -1,37 +1,47 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.mx/thymeleaf/layout" layout:decorate="~{admin/main}">
+
 <head>
-    <title>Liste des spectacles</title>
+	<title>Liste des spectacles</title>
 </head>
+
 <body>
 
-                <div class="container">
-                    <div layout:fragment="content">
-                        <h1 th:text="${title}">Liste des Utilisateurs</h1>
+	<div layout:fragment="content">
+		<div class="text-end m-3">
+  <button class="btn btn-primary">Add <i class="bi bi-person-fill-add fs-3"></i></button>
+</div>
+		<div class="container">
 
-                        <table style="width:100%">
-                            <tr>
-                                <th>username</th>
-                                <th>Prenom</th>
-                                <th>Nom</th>
-                                <th>Email</th>
-                                <th>Langue</th>
-                                <th>Date de Création</th>  
-                            </tr>
-                            <tr th:unless="${#lists.isEmpty(users)}" th:each="user : ${users}">
-                                <td th:text="${user.login}"></td>
-                                <td th:text="${user.firstname}"></td>
-                                <td th:text="${user.lastname}"></td>
-                                <td th:text="${user.email}"></td>
-                                <td th:text="${user.langue}"></td>
-                                <td th:text="${user.created_at}"></td>        
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-       
+			<h1 th:text="${title}">Liste des Utilisateurs</h1>
+
+			<table class="table table-striped">
+				<thead>
+				<tr>
+					<th>username</th>
+					<th>Prenom</th>
+					<th>Nom</th>
+					<th>Email</th>
+					<th>Langue</th>
+					<th>Date de Création</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr th:unless="${#lists.isEmpty(users)}" th:each="user : ${users}">
+					<td th:text="${user.login}"></td>
+					<td th:text="${user.firstname}"></td>
+					<td th:text="${user.lastname}"></td>
+					<td th:text="${user.email}"></td>
+					<td th:text="${user.langue}"></td>
+					<td th:text="${user.created_at}"></td>
+					<td><button class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button></td>
+					<td><button class="btn btn-danger"><i class="bi bi-trash3"></i></button></td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
 </body>
+
 </html>
-
-
-
