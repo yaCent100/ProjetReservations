@@ -4,14 +4,13 @@
     <title>Liste des spectacles</title>
 </head>
 <body>
-    <table style="width:100%">
-        <tr>
-            <td>
-                <div class="container">
+
+                
                     <div layout:fragment="content">
+						<div class="container">
                         <h1 th:text="${title}">Liste des spectacles</h1>
 
-                        <table style="width:100%">
+                        <table class="table table-striped">
                             <tr>
                                 <th>Nom</th>
                                 <th>Prix</th>
@@ -27,8 +26,6 @@
                         </table>
                     </div>
                 </div>
-            </td>
-        </tr>
-    </table>
+
 </body>
 </html>
