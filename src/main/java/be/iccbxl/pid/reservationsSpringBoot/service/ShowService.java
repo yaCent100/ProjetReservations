@@ -3,6 +3,8 @@ package be.iccbxl.pid.reservationsSpringBoot.service;
 import be.iccbxl.pid.reservationsSpringBoot.model.Location;
 import be.iccbxl.pid.reservationsSpringBoot.model.Show;
 import be.iccbxl.pid.reservationsSpringBoot.repository.ShowRepository;
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,5 +49,7 @@ public class ShowService {
     public List<Show> getFromLocation(Location location) {
         return showRepository.findByLocation(location);
     }
+
+
 
 }

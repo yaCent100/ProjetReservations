@@ -15,106 +15,107 @@ import java.util.List;
 @Controller
 public class ArtistController {
 
-    @Autowired
-    ArtistService artistService;
-        @GetMapping("/artists")
-        public String index(Model model) {
+	@Autowired
+	ArtistService artistService;
 
-            List<Artist> artists = artistService.getAllArtists();
+	@GetMapping("/artists")
+	public String index(Model model) {
 
-            model.addAttribute("artists", artists);
-            model.addAttribute("title", "Liste des artistes");
+		List<Artist> artists = artistService.getAllArtists();
 
-            return "artist/index";
-        }
+		model.addAttribute("artists", artists);
+		model.addAttribute("title", "Liste des artistes");
 
-    @GetMapping("/artists/{id}")
-    public String show(Model model, @PathVariable("id") String id) {
+		return "artist/index";
+	}
 
-            Artist artist = artistService.getArtist(id);
+	@GetMapping("/artists/{id}")
+	public String show(Model model, @PathVariable("id") String id) {
 
-        model.addAttribute("artist", artist);
-        model.addAttribute("title", "Fiche d'un artiste");
+		Artist artist = artistService.getArtist(id);
 
-        return "artist/show";
-    }
+		model.addAttribute("artist", artist);
+		model.addAttribute("title", "Fiche d'un artiste");
 
-    @GetMapping("/artists/create")
-    public String create(Model model) {
-        Artist artist = Artist.createInstance();
+		return "artist/show";
+	}
 
-        model.addAttribute("artist", artist);
+	@GetMapping("/artists/create")
+	public String create(Model model) {
+		Artist artist = Artist.createInstance();
 
-        return "artist/create";
-    }
+		model.addAttribute("artist", artist);
 
-    @PostMapping("/artists/create")
-    public String store(@Valid @ModelAttribute("artist") Artist artist, BindingResult bindingResult, Model model) {
+		return "artist/create";
+	}
+	
+	
 
-        if (bindingResult.hasErrors()) {
-            return "artist/create";
-        }
+	@PostMapping("/artists/create")
+	public String store(@Valid @ModelAttribute("artist") Artist artist, BindingResult bindingResult, Model model) {
 
-        artistService.addArtist(artist);
+		if (bindingResult.hasErrors()) {
+			return "artist/create";
+		}
 
-        return "redirect:/artists/"+artist.getId();
-    }
+		artistService.addArtist(artist);
 
-    @GetMapping("/artists/{id}/edit")
-    public String edit(Model model, @PathVariable("id") String id, HttpServletRequest request) {
-        Artist artist = artistService.getArtist(id);
+		return "redirect:/artists/" + artist.getId();
+	}
 
-        model.addAttribute("artist", artist);
+	@GetMapping("/artists/{id}/edit")
+	public String edit(Model model, @PathVariable("id") String id, HttpServletRequest request) {
+		Artist artist = artistService.getArtist(id);
 
+		model.addAttribute("artist", artist);
 
-        //Générer le lien retour pour l'annulation
-        String referrer = request.getHeader("Referer");
+		// Générer le lien retour pour l'annulation
+		String referrer = request.getHeader("Referer");
 
-        if(referrer!=null && !referrer.equals("")) {
-            model.addAttribute("back", referrer);
-        } else {
-            model.addAttribute("back", "/artists/"+artist.getId());
-        }
+		if (referrer != null && !referrer.equals("")) {
+			model.addAttribute("back", referrer);
+		} else {
+			model.addAttribute("back", "/artists/" + artist.getId());
+		}
 
-        return "artist/edit";
-    }
+		return "artist/edit";
+	}
 
-    @PutMapping("/artists/{id}/edit")
-    public String update(@Valid @ModelAttribute("artist") Artist artist, BindingResult bindingResult, @PathVariable("id") String id, Model model) {
+	@PutMapping("/artists/{id}/edit")
+	public String update(@Valid @ModelAttribute("artist") Artist artist, BindingResult bindingResult,
+			@PathVariable("id") String id, Model model) {
 
-        if (bindingResult.hasErrors()) {
-            return "artist/edit";
-        }
+		if (bindingResult.hasErrors()) {
+			return "artist/edit";
+		}
 
-        Artist existing = artistService.getArtist(id);
+		Artist existing = artistService.getArtist(id);
 
-        if(existing==null) {
-            return "artist/index";
-        }
+		if (existing == null) {
+			return "artist/index";
+		}
 
-        Long indice = (long) Integer.parseInt(id);
+		Long indice = (long) Integer.parseInt(id);
 
-        artist.setId(indice);
-        artistService.updateArtist(String.valueOf(artist.getId()), artist);
+		artist.setId(indice);
+		artistService.updateArtist(String.valueOf(artist.getId()), artist);
 
-        model.addAttribute("artist", artist);
+		model.addAttribute("artist", artist);
 
-        return "redirect:/artists/"+artist.getId();
-    }
-    @DeleteMapping("/artists/{id}")
-    public String delete(@PathVariable("id") String id, Model model) {
-        Artist existing = artistService.getArtist(id);
+		return "redirect:/artists/" + artist.getId();
+	}
 
-        if(existing!=null) {
-            Long indice = (long) Integer.parseInt(id);
+	@DeleteMapping("/artists/{id}")
+	public String delete(@PathVariable("id") String id, Model model) {
+		Artist existing = artistService.getArtist(id);
 
-            artistService.deleteArtist(String.valueOf(indice));
-        }
+		if (existing != null) {
+			Long indice = (long) Integer.parseInt(id);
 
-        return "redirect:/artists";
-    }
+			artistService.deleteArtist(String.valueOf(indice));
+		}
 
-
-
+		return "redirect:/artists";
+	}
 
 }

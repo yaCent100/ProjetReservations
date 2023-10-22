@@ -37,6 +37,7 @@ public class Show {
     private Location location;
 
     private boolean bookable;
+    
     private double price;
 
     /**
@@ -126,6 +127,12 @@ public class Show {
 
         return this;
     }
+    
+    public static Show createInstance() {
+        return new Show();
+    }
+    
+    
 
 
 

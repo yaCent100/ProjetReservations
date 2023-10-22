@@ -1,38 +1,41 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.mx/thymeleaf/layout" layout:decorate="~{admin/main}">
+
 <head>
-    <title>Liste des spectacles</title>
+	<title>Liste des spectacles</title>
 </head>
+
 <body>
 
-                
-                    <div layout:fragment="content">
-						<div class="text-end m-3">
-  					<button th:href="" class="btn btn-primary">Add a Show</button>
-  					</div>
-						<div class="container">
-                        <h1 th:text="${title}">Liste des spectacles</h1>
 
-                        <table class="table table-striped">
-							<thead>
-                            <tr>
-                                <th>Nom</th>
-                                <th>Prix</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:unless="${#lists.isEmpty(shows)}" th:each="show : ${shows}">
-                                <td>
-                                    <span th:text="${show.title}">Ayiti</span>
-                                </td>
-                                <td th:if="${show.bookable}">
-                                    <span th:text="${show.price} + ' €'">9.99 €</span>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+	<div layout:fragment="content">
+		<div class="text-end m-3 ">
+			<a th:href="@{/admin/add-show}" class="btn btn-primary">Add a Show</a>
+		</div>
+		<div class="container">
+			<h1 th:text="${title}">Liste des spectacles</h1>
+
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Nom</th>
+						<th>Prix</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:unless="${#lists.isEmpty(shows)}" th:each="show : ${shows}">
+						<td>
+							<span th:text="${show.title}">Ayiti</span>
+						</td>
+						<td th:if="${show.bookable}">
+							<span th:text="${show.price} + ' €'">9.99 €</span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
 
 </body>
+
 </html>

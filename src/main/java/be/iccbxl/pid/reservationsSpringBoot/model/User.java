@@ -70,6 +70,10 @@ public class User {
         return this;
     }
 
+	public static User createInstance() {
+		return new User();
+	}
+
 
 
 

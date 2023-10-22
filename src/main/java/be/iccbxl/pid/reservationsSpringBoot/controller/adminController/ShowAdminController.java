@@ -1,6 +1,6 @@
-package be.iccbxl.pid.reservationsSpringBoot.controller;
+package be.iccbxl.pid.reservationsSpringBoot.controller.adminController;
 
-import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,50 +11,46 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import be.iccbxl.pid.reservationsSpringBoot.model.Artist;
+import be.iccbxl.pid.reservationsSpringBoot.controller.ShowController;
 import be.iccbxl.pid.reservationsSpringBoot.model.Show;
-import be.iccbxl.pid.reservationsSpringBoot.model.User;
 import be.iccbxl.pid.reservationsSpringBoot.service.ShowService;
-import be.iccbxl.pid.reservationsSpringBoot.service.UserService;
 import jakarta.validation.Valid;
 
+@RequestMapping("/admin")
 @Controller
-public class AdminController {
+public class ShowAdminController extends ShowController {
 	
 	@Autowired
 	ShowService showService;
 	
+	@Override
+	@GetMapping("/shows")
+	public String index(Model model) {
+		super.index(model);
 
+	    return "admin/show/shows";
+	}
 	
-	
-	
-	@GetMapping("/admin")
-	public String index() {
+	@GetMapping("/add-show")
+	public String create(Model model) {
 		
-		return "admin/main";
+		Show show = Show.createInstance();
+		model.addAttribute("show", show);
+		
+		return "admin/show/add-show";
 	}
 	
 
-	
-
-
-
-	
-	
-	
-
-	
-	@PostMapping("/admin/user/add-user")
-	public String userStore(@Valid @ModelAttribute("user") Show show, BindingResult bindingResult, Model model) {
+	@PostMapping("/add-show")
+	public String store(@Valid @ModelAttribute("show") Show show, BindingResult bindingResult, Model model) {
 	    if (bindingResult.hasErrors()) {
-	        return "users/add-user";
+	        return "show/add-show";
 	    }
 
 	    showService.add(show);
 
-	    return "redirect:/admin/users/" + show.getId();
+	    return "redirect:/admin/show/" + show.getId();
 	}
-	
 	
 	
 	
