@@ -31,8 +31,16 @@ public class User {
 
     @ManyToMany(mappedBy = "users")
     private List<Representation> representations = new ArrayList<>();
-
-
+    
+    public User(String login, String password, String firstname, String lastname, String email, String langue) {
+        this.login = login;
+        this.password = password;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.langue = langue;
+        this.created_at = LocalDateTime.now();
+    }
 
     public User addRole(Role role) {
         if(!this.roles.contains(role)) {
@@ -73,6 +81,8 @@ public class User {
 	public static User createInstance() {
 		return new User();
 	}
+	
+
 
 
 

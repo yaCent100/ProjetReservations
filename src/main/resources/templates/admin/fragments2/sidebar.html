@@ -4,44 +4,57 @@
 <head>
 	<meta charset="utf-8">
 	<title>Sidebar fragment</title>
+
+	<style>
+		/* Ajoutez ces styles pour positionner le bouton */
+		#sidebarToggleBtn {
+			position: absolute;
+			top: 10px;
+			left: 10px;
+			z-index: 1000;
+		}
+	</style>
+
 </head>
 
 <body>
 
-	<div th:fragment="sidebar" class="col-md-2">
+	<div th:fragment="sidebar" class="col-md-2 position-relative">
+
 
 		<div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="height: 100vh;">
 			<hr>
 			<ul class="nav nav-pills flex-column mb-auto">
-				
+
 				<li>
-					<a href="@{/admin/dashboard}" class="nav-link text-white active">
+					<a href="@{/admin/dashboard}" class="nav-link text-white active" id="dashboard-link">
 						<i class="bi bi-speedometer2"></i>
 						Dashboard
 					</a>
 				</li>
 				<li>
-					<a th:href="@{/admin/users}" class="nav-link text-white">
+					<a th:href="@{/admin/users}" class="nav-link text-white" id="users-link">
 						<i class="bi bi-people"></i> Users
 					</a>
 				</li>
 				<li>
-					<a th:href="@{/admin/shows}" class="nav-link text-white">
+					<a th:href="@{/admin/shows}" class="nav-link text-white" id="shows-link">
+						<i class="fa fa-glasses"></i>
 						Shows
 					</a>
 				</li>
 				<li>
-					<a th:href="@{/users}" class="nav-link text-white">
+					<a th:href="@{/users}" class="nav-link text-white" id="representations-link">
 						Representations
 					</a>
 				</li>
 				<li>
-					<a th:href="@{/users}" class="nav-link text-white">
+					<a th:href="@{/users}" class="nav-link text-white" id="artistes-link">
 						Artistes
 					</a>
 				</li>
 				<li>
-					<a th:href="@{/users}" class="nav-link text-white">
+					<a th:href="@{/users}" class="nav-link text-white" id="reservations-link">
 						Reservations
 					</a>
 				</li>
@@ -65,6 +78,7 @@
 			</div>
 		</div>
 	</div>
+	
 </body>
 
 </html>

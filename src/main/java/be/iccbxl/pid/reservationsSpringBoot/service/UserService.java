@@ -41,5 +41,11 @@ public class UserService {
 
         userRepository.deleteById(indice);
     }
+    
+    public User finByLogin(String login) {
+    	
+    	return userRepository.findByLogin(login);
+    }
+
 
 }

@@ -20,7 +20,7 @@ public class Show {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique=true)
+    @Column(unique = true)
     private String slug;
 
     private String title;
@@ -62,10 +62,10 @@ public class Show {
 
     public Show(String title, String description, String posterUrl, Location location, boolean bookable,
                 double price) {
+    	this.title = title;
+    	
         Slugify slg = new Slugify();
-
         this.slug = slg.slugify(title);
-        this.title = title;
         this.description = description;
         this.posterUrl = posterUrl;
         this.location = location;
@@ -77,10 +77,9 @@ public class Show {
 
     public void setTitle(String title) {
         this.title = title;
-
         Slugify slg = new Slugify();
+        this.slug = slg.slugify(title);
 
-        this.setSlug(slg.slugify(title));
     }
 
 

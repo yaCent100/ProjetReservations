@@ -4,7 +4,9 @@
 <head>
     <title>Création d'un utilisateur</title>
     <style>
-        .fieldError { color: red; }
+        .fieldError {
+            color: red;
+        }
     </style>
 </head>
 
@@ -12,41 +14,51 @@
     <div layout:fragment="content">
         <h1>Nouvel utilisateur</h1>
 
-        <form th:action="@{/admin/add-user}" th:object="${user}" method="post" class="form-control">
-            <div>
-                <label>Login:</label>
-                <input type="text" th:field="*{login}">
+        <form th:action="@{/admin/add-user}" th:object="${user}" method="post">
+            <div class="mb-3">
+                <label class="form-label">Login:</label>
+                <input type="text" th:field="*{login}" class="form-control">
                 <p th:if="${#fields.hasErrors('login')}" th:errors="*{login}" th:errorclass="fieldError"></p>
             </div>
-            <div>
-                <label>Password:</label>
-                <input type="password" th:field="*{password}">
+            <div class="mb-3">
+                <label class="form-label">Password:</label>
+                <input type="password" th:field="*{password}" class="form-control">
                 <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" th:errorclass="fieldError"></p>
             </div>
-            <div>
-                <label>Firstname:</label>
-                <input type="text" th:field="*{firstname}">
+            <div class="mb-3">
+                <label class="form-label">Firstname:</label>
+                <input type="text" th:field="*{firstname}" class="form-control">
                 <p th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}" th:errorclass="fieldError"></p>
             </div>
-            <div>
-                <label>Lastname:</label>
-                <input type="text" th:field="*{lastname}">
+            <div class="mb-3">
+                <label class="form-label">Lastname:</label>
+                <input type="text" th:field="*{lastname}" class="form-control">
                 <p th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}" th:errorclass="fieldError"></p>
             </div>
-            <div>
-                <label>Email:</label>
-                <input type="email" th:field="*{email}">
+            <div class="mb-3">
+                <label class="form-label">Email:</label>
+                <input type="email" th:field="*{email}" class="form-control">
                 <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" th:errorclass="fieldError"></p>
             </div>
-            <div>
-                <label>Langue:</label>
-                <input type="text" th:field="*{langue}">
+            <div class="mb-3">
+                <label class="form-label">Langue:</label>
+                <input type="text" th:field="*{langue}" class="form-control">
                 <p th:if="${#fields.hasErrors('langue')}" th:errors="*{langue}" th:errorclass="fieldError"></p>
             </div>
-            <div>
-                <button type="submit" th:text="Ajouter">Ajouter</button>
-                <button type="reset" th:text="Réinitialiser">Réinitialiser</button>
-                <a th:href="@{/admin/users}">Annuler</a>
+        <div class="mb-3">
+                <label class="form-label">Rôle:</label>
+                <div th:each="role : ${roles}">
+                    <div class="form-check">
+                        <input type="checkbox" th:value="${role.id}" th:field="*{roles}" class="form-check-input">
+                        <label th:text="${role.role}" class="form-check-label"></label>
+                    </div>
+                </div>
+                <p th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}" th:errorclass="fieldError"></p>
+            </div>
+            <div class="mb-3">
+                <button type="submit" th:text="Ajouter" class="btn btn-primary">Ajouter</button>
+                <button type="reset" th:text="Réinitialiser" class="btn btn-secondary">Réinitialiser</button>
+                <a th:href="@{/admin/users}" class="btn btn-danger">Annuler</a>
             </div>
         </form>
     </div>

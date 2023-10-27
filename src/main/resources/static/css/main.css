@@ -1,0 +1,27 @@
+/* CSS pour les cartes */
+.card {
+    border: 1px solid #d1d1d1; /* Bordure de la carte */
+    border-radius: 5px; /* Coins arrondis de la carte */
+    padding: 10px; /* Remplissage de la carte */
+    transition: transform 0.3s, box-shadow 0.3s; /* Transition pour l'effet de zoom et d'ombrage */
+    margin:10px;
+        text-decoration: none;
+
+    
+}
+
+/* Style du texte dans la carte */
+.card-body {
+    text-decoration: none;
+    }
+
+/* Effet de zoom et d'ombrage au survol de la carte */
+.card:hover {
+    transform: scale(1.05); /* Zoom au survol */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); /* Ombrage au survol */
+}
+
+
+
+
+/*  bleu #26495c  brun #c4a35a  orange #c66b3d   gris #e5e5dc

@@ -10,7 +10,7 @@
 
 	<div layout:fragment="content">
 		<div class="text-end m-3 ">
-			<a th:href="@{/admin/add-show}" class="btn btn-primary">Add a Show</a>
+			<a th:href="@{/admin/add-show}" class="btn btn-success">Add a Show</a>
 		</div>
 		<div class="container">
 			<h1 th:text="${title}">Liste des spectacles</h1>
@@ -18,18 +18,39 @@
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th>Nom</th>
+						<th></th>
+						<th>Titre</th>
+						<th>Descritpion</th>
 						<th>Prix</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:unless="${#lists.isEmpty(shows)}" th:each="show : ${shows}">
 						<td>
-							<span th:text="${show.title}">Ayiti</span>
+							<img th:src="@{'/images/' + ${show.posterUrl}}" class="card-img-top" alt="..."
+								style="max-height: 100px; max-width: 100px;">
 						</td>
+						<td>
+							<span th:text="${show.title}"></span>
+						</td>
+						<td>
+							<span th:text="${show.description}"></span>
+						</td>
+
 						<td th:if="${show.bookable}">
-							<span th:text="${show.price} + ' €'">9.99 €</span>
+							<span th:text="${show.price} + ' €'"></span>
 						</td>
+						<td><a th:href="@{/admin/{id}/edit(id=${show.id})}" class="btn btn-outline-primary"><i
+									class="bi bi-pencil-fill"></i></a></td>
+						<td>
+							<form th:id="|deleteForm-${show.id}|" th:action="@{/shows/{id}(id=${show.id})}"
+								th:method="delete">
+								<a href="#" class="btn btn-outline-danger" th:onclick="|if(confirm('Confirm delete show #${show.id}'))
+	                    		document.getElementById('deleteForm-${show.id}').submit();
+	                    		return false;|"><i class="bi bi-trash3-fill"></i></a>
+							</form>
+						</td>
+
 					</tr>
 				</tbody>
 			</table>

@@ -9,29 +9,33 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+@RequestMapping("/show")
 @Controller
 public class ShowController {
 
+	
     @Autowired
     ShowService showService;
 
-    @GetMapping("/shows")
+    
+    @GetMapping
     public String index(Model model) {
-        List<Show> shows = showService.getAll();
+    	
+    	 List<Show> shows = showService.getAll();
 
-        model.addAttribute("shows", shows);
-        model.addAttribute("title", "Liste des spectacles");
-
-        return "show/index";
+	     model.addAttribute("shows", shows);
+    	
+    	return "admin/main";
     }
 
-    @GetMapping("/shows/{id}")
+    @GetMapping("/{id}")
     public String show(Model model, @PathVariable("id") String id) {
         Show show = showService.get(id);
 
@@ -54,6 +58,8 @@ public class ShowController {
 
         return "show/show";
     }
+    
+    
 
 
 

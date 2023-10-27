@@ -23,10 +23,10 @@ public class HomeController {
 		  List<Show> shows = showService.getAll();
 
 	        model.addAttribute("shows", shows);
-	        model.addAttribute("title", "Liste des spectacles");		
-		
+	        
 		return "layouts/main";
 	}
+
 	
 
 }
