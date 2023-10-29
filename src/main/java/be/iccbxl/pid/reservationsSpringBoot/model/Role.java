@@ -18,7 +18,7 @@ public class Role {
     private Long id;
     private String role;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "role_id"),
@@ -47,5 +47,7 @@ public class Role {
 
         return this;
     }
+    
+
 
 }

@@ -34,7 +34,7 @@
 						<td th:text="${user.lastname}"></td>
 						<td th:text="${user.email}"></td>
 						
-						<td th:each="role : ${user.roles}" th:text="${role.role}"></td>
+						<td th:each="role : ${user.roles}" th:text="${role.role} + ' '"></td>
 						
 						<td th:text="${user.langue}"></td>
 						<td th:text="${user.created_at}"></td>

@@ -18,46 +18,44 @@
             <div class="mb-3">
                 <label class="form-label">Login:</label>
                 <input type="text" th:field="*{login}" class="form-control">
-                <p th:if="${#fields.hasErrors('login')}" th:errors="*{login}" th:errorclass="fieldError"></p>
+                <p th:if="${#fields.hasErrors('login')}" th:errors="*{login}" class="fieldError"></p>
             </div>
             <div class="mb-3">
                 <label class="form-label">Password:</label>
                 <input type="password" th:field="*{password}" class="form-control">
-                <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" th:errorclass="fieldError"></p>
+                <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError"></p>
             </div>
             <div class="mb-3">
                 <label class="form-label">Firstname:</label>
                 <input type="text" th:field="*{firstname}" class="form-control">
-                <p th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}" th:errorclass="fieldError"></p>
+                <p th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}" class="fieldError"></p>
             </div>
             <div class="mb-3">
                 <label class="form-label">Lastname:</label>
                 <input type="text" th:field="*{lastname}" class="form-control">
-                <p th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}" th:errorclass="fieldError"></p>
+                <p th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}" class="fieldError"></p>
             </div>
             <div class="mb-3">
                 <label class="form-label">Email:</label>
                 <input type="email" th:field="*{email}" class="form-control">
-                <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" th:errorclass="fieldError"></p>
+                <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="fieldError"></p>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Rôle:</label>
+                <select name="roles" multiple="multiple" class="form-control" th:field="*{roles}">
+                    <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.role}"></option>
+                </select>
+                <p th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}" class="fieldError"></p>
             </div>
             <div class="mb-3">
                 <label class="form-label">Langue:</label>
                 <input type="text" th:field="*{langue}" class="form-control">
-                <p th:if="${#fields.hasErrors('langue')}" th:errors="*{langue}" th:errorclass="fieldError"></p>
+                <p th:if="${#fields.hasErrors('langue')}" th:errors="*{langue}" class="fieldError"></p>
             </div>
-        <div class="mb-3">
-                <label class="form-label">Rôle:</label>
-                <div th:each="role : ${roles}">
-                    <div class="form-check">
-                        <input type="checkbox" th:value="${role.id}" th:field="*{roles}" class="form-check-input">
-                        <label th:text="${role.role}" class="form-check-label"></label>
-                    </div>
-                </div>
-                <p th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}" th:errorclass="fieldError"></p>
-            </div>
+
             <div class="mb-3">
-                <button type="submit" th:text="Ajouter" class="btn btn-primary">Ajouter</button>
-                <button type="reset" th:text="Réinitialiser" class="btn btn-secondary">Réinitialiser</button>
+                <button type="submit" class="btn btn-primary">Ajouter</button>
+                <button type="reset" class="btn btn-secondary">Réinitialiser</button>
                 <a th:href="@{/admin/users}" class="btn btn-danger">Annuler</a>
             </div>
         </form>

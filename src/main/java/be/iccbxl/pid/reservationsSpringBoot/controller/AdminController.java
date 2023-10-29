@@ -1,5 +1,6 @@
 package be.iccbxl.pid.reservationsSpringBoot.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import be.iccbxl.pid.reservationsSpringBoot.model.Role;
 import be.iccbxl.pid.reservationsSpringBoot.model.Show;
@@ -77,14 +79,19 @@ public class AdminController {
 	
 	
 	@PostMapping("/add-user")
-	public String Store(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
+	public String store(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model, @RequestParam("roles") List<String> roleIds) {
 	    if (bindingResult.hasErrors()) {
 	        return "admin/user/add-user";
 	    }
+	  
+	    for (String roleId : roleIds) {
+	        Role role = roleService.get(roleId);
+	        user.getRoles().add(role); // Ajoute les rôles existants à l'utilisateur
+	    }
 
-	    userService.addUser(user);
+	    userService.addUser(user); // Ajoute l'utilisateur avec les rôles
 
-	    return "redirect:/admin/users/" + user.getId();
+	    return "redirect:/admin/users";
 	}
 	
 	

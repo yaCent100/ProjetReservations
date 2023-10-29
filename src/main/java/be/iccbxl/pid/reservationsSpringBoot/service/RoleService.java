@@ -37,4 +37,9 @@ public class RoleService {
         roleRepository.deleteById(indice);
 
     }
+    
+	public Role findByRole(String roleName) {
+		return roleRepository.findByRole(roleName);
+	}
+
 }
