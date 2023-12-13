@@ -1,6 +1,7 @@
 package be.iccbxl.pid.reservationsSpringBoot.model;
 
 import com.github.slugify.Slugify;
+
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -24,6 +25,7 @@ public class Show {
     private String slug;
 
     private String title;
+    
     private String description;
 
     @Column(name="poster_url")
@@ -130,10 +132,6 @@ public class Show {
     public static Show createInstance() {
         return new Show();
     }
-    
-    
-
-
 
 
 

@@ -12,7 +12,8 @@ public interface RepresentationRepository extends CrudRepository<Representation,
 
     List<Representation> findByShow(Show show);
     List<Representation> findByLocation(Location location);
-    List<Representation> findByWhen(LocalDateTime when);
+    //List<Representation> findByWhen(LocalDateTime when);
+	Representation findByWhen(LocalDateTime when);
 
 
 }

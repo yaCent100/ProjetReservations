@@ -1,46 +1,71 @@
-package be.iccbxl.pid.reservationsSpringBoot.config;
+package be.iccbxl.pid.reservationsSpringBoot.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.reactive.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+public class SecurityConfig  {
 
-	@Bean
-	PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+	@Autowired
+	CustomUserDetailService customUserDetailService;
 
-	@Bean
-	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-	    http
-	        .csrf(Customizer.withDefaults())
-	        .authorizeHttpRequests(authorize -> authorize
-	            .anyRequest().permitAll()
-	        )
-	        .httpBasic(Customizer.withDefaults())
-	        .formLogin(form -> form
-	            .loginPage("/login")
-	            .usernameParameter("login")
-	            .defaultSuccessUrl("/home")
-	            
-	        )
-	        .logout(logout -> logout
-	            .invalidateHttpSession(true)
-	            .clearAuthentication(true)
-	            .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-	            .logoutSuccessUrl("/home")
-	        );
+    
+	   @Bean
+	 	BCryptPasswordEncoder bCryptPasswordEncoder() {
+	 		return new BCryptPasswordEncoder();
+	 	}
+	   
+	   @Bean
+		public DaoAuthenticationProvider authenticationManager(
+				CustomUserDetailService userDetailsService,
+				BCryptPasswordEncoder passwordEncoder) {
+			DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+			authenticationProvider.setUserDetailsService(customUserDetailService);
+			authenticationProvider.setPasswordEncoder(passwordEncoder);
 
-	    return http.build();
-	}
+
+			return authenticationProvider;
+		}
+
+
+		@Bean
+		public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		
+			return http.authorizeHttpRequests(auth -> {
+				//auth.requestMatchers("/admin").hasRole("ADMIN");
+				auth.requestMatchers("/profil").hasRole("member");
+				auth.requestMatchers("/css/**", "/js/**", "/images/**").permitAll();
+				auth.requestMatchers("/login", "/register", "/admin/**", "/exportCSV", "rss/shows", "/confirmationReservation").permitAll();
+                auth.anyRequest().authenticated();
+			})
+					
+				.formLogin(form -> {
+					form.loginPage("/login");
+					form.successForwardUrl("/home");
+				})
+				.csrf(csrf -> csrf.disable())
+				.build();
+		}
+
+	
+
+	
 }
+	
+
+	
+
+
+

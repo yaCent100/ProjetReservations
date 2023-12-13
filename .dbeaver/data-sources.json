@@ -1,0 +1,35 @@
+{
+	"folders": {},
+	"connections": {
+		"mysql8-18b8b91177f-57ed979b9a82765a": {
+			"provider": "mysql",
+			"driver": "mysql8",
+			"name": "Mysql",
+			"save-password": true,
+			"configuration": {
+				"host": "localhost",
+				"port": "3306",
+				"database": "reservations",
+				"url": "jdbc:mysql://localhost:3306/reservations",
+				"configurationType": "MANUAL",
+				"home": "C:\\Program Files\\MySQL\\MySQL Server 8.0",
+				"type": "dev",
+				"auth-model": "native"
+			}
+		}
+	},
+	"connection-types": {
+		"dev": {
+			"name": "Development",
+			"color": "255,255,255",
+			"description": "Regular development database",
+			"auto-commit": true,
+			"confirm-execute": false,
+			"confirm-data-change": false,
+			"smart-commit": false,
+			"smart-commit-recover": false,
+			"auto-close-transactions": true,
+			"close-transactions-period": 1800
+		}
+	}
+}

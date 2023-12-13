@@ -3,85 +3,53 @@
 
 <head>
 	<title>Login page</title>
-	<link rel="stylesheet" type="text/css" href="css/login.scss">
-	<link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
-	<style>
-		html,
-		body,
-		.intro {
-			height: 100%;
-		}
 
-
-
-		a.link {
-			font-size: .875rem;
-			color: #6582B0;
-		}
-
-		a.link:hover,
-		a.link:active {
-			color: #426193;
-		}
-	</style>
 
 
 </head>
 
 <body>
-	<div layout:fragment="content" class="row">
-		<section class="intro">
-			<div class="bg-image h-100">
-				<div class="mask d-flex align-items-center h-100">
-					<div class="container">
-						<div class="row d-flex justify-content-center align-items-center h-100">
-							<div class="col-12 col-lg-9 col-xl-8 ">
-								<div class="card" style="border-radius: 1rem;">
-									<div class="row g-0">
-										<div class="col-md-4 d-none d-md-block">
-											<img th:src="@{/img/login-image.jpg}" alt="login form" class="img-fluid"
-												style="border-top-left-radius: 1rem; border-bottom-left-radius: 1rem;" />
-										</div>
-										<div class="col-md-8 d-flex align-items-center">
-											<div class="card-body py-5 px-4 p-md-5">
 
-												<form th:action="@{/processlogin}" method="post">
-													<h4 class="fw-bold mb-4" style="color: #92aad0;">Log in to your
-														account</h4>
-													<p class="mb-4" style="color: #45526e;">To log in, please fill in
-														these text fields with your e-mail address and password.</p>
 
-													<div class="form-outline mb-4">
-														<input type="text" id="username" class="form-control"
-															th:field="${user.login}" />
-														<label class="form-label" for="login">Login</label>
-													</div>
 
-													<div class="form-outline mb-4">
-														<input type="password" id="password" class="form-control"
-															th:field="${user.password}" />
-														<label class="form-label" for="password">Password</label>
-													</div>
+	<div layout:fragment="content" class="container">
 
-													<div class="d-flex justify-content-end pt-1 mb-4">
-														<button type="submit" class="btn btn-primary btn-rounded"
-															style="background-color: #92aad0;">Log in</button>
-													</div>
-													<hr>
-													<a class="link float-end" th:href="@{/register}">Forgot password? Click here.</a>
-												</form>
+		<div class="d-flex justify-content-center align-items-center vh-100 ">
+			<div class="container">
+				<div>
+					<h1 class="text-center mb-5 h1Login" id="avousdejouer">À vous de jouer</h1>
+				</div>
+				<div class="row justify-content-center  p-4 mt-5" width="300px">
+					
+					<div class="col-md-4 mx-auto text-center bg-light ">
+					
+						<form class="form-signin" method="post" th:action="@{/login}">
+							<h2 class="form-signin-heading">Please sign in</h2>
+							<div class="alert alert-success" role="alert">You have been signed out</div>
+							<p>
+								<label for="username" class="sr-only">Username</label>
+								<input type="text" id="username" name="username" class="form-control"
+									placeholder="Username" required="" autofocus="">
+							</p>
+							<p>
+								<label for="password" class="sr-only">Password</label>
+								<input type="password" id="password" name="password" class="form-control"
+									placeholder="Password" required="">
+							</p>
+							<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+						</form>
+					</div>
+					<div class="col-md-8 text-center">
 
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+						<img src="/images/loginImg.webp" class="img-fluid">
 					</div>
 				</div>
+
 			</div>
-		</section>
+		</div>
 	</div>
+
+
 </body>
 
 </html>

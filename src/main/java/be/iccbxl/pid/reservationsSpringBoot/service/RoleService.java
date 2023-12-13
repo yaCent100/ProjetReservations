@@ -20,11 +20,13 @@ public class RoleService {
         roleRepository.findAll().forEach(roles::add);
         return roles;
     }
+    
     public Role get(String id) {
         Long indice = (long) Integer.parseInt(id);
         Optional<Role> role = roleRepository.findById(indice);
         return role.orElse(null);
     }
+    
     public void add(Role role) {
         roleRepository.save(role);
     }
@@ -38,8 +40,8 @@ public class RoleService {
 
     }
     
-	public Role findByRole(String roleName) {
-		return roleRepository.findByRole(roleName);
-	}
+    public Role findByRole(String roleName) {
+        return roleRepository.findByRole(roleName);
+    }
 
 }

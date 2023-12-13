@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +19,16 @@ public class Role {
     private Long id;
     private String role;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+   /*@ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "role_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> users = new ArrayList<>();
+    private List<User> users = new ArrayList<>();*/
 
+   @ManyToMany(mappedBy = "roles")
+    private List<User> users = new ArrayList<>();
+    
 
     public List<User> getUsers() {
         return users;
@@ -33,7 +37,7 @@ public class Role {
     public Role addUser(User user) {
         if(!this.users.contains(user)) {
             this.users.add(user);
-            user.addRole(this);
+            user.getRoles().add(this);
         }
 
         return this;
@@ -48,6 +52,15 @@ public class Role {
         return this;
     }
     
+    
+    @Override
+    public String toString() {
+        return " "+this.role+" ";
+    }
+    
+    public static Role createInstance() {
+    	return new Role();
+    }
 
 
 }

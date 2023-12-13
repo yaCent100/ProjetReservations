@@ -1,6 +1,5 @@
 package be.iccbxl.pid.reservationsSpringBoot.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +30,7 @@ public class AdminController {
 	
 	//--------------DASHBOARD-------------//
 	
-	@GetMapping
+	@GetMapping()
 	public String dashboard(Model model) {
 		List<User> users = userService.getAllUsers();
 		int totalUsers = users.size();
@@ -43,7 +42,7 @@ public class AdminController {
 		 model.addAttribute("totalShows", totalShows);
 		
 		 
-		return "admin/main";
+		return "admin/dashboard/dashboard";
 	}
 	
 
@@ -60,7 +59,7 @@ public class AdminController {
 		List<User> users = userService.getAllUsers();
 		
 		model.addAttribute("users", users);
-		model.addAttribute("title", "Utilisateurs");
+		model.addAttribute("title", "Users");
 		
 		return "admin/user/users";
 	}
@@ -69,30 +68,101 @@ public class AdminController {
 	public String createUser(Model model) {
 		
 		User user = User.createInstance();
-		List<Role> roles = roleService.getAll();
 		
-		model.addAttribute("roles", roles);
 		model.addAttribute("user", user);
 		
 		return "admin/user/add-user";
 	}
 	
-	
 	@PostMapping("/add-user")
-	public String store(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model, @RequestParam("roles") List<String> roleIds) {
+	public String store(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, @RequestParam(name = "roles", required = false) List<String> roleIds, Model model) {
 	    if (bindingResult.hasErrors()) {
 	        return "admin/user/add-user";
 	    }
-	  
-	    for (String roleId : roleIds) {
-	        Role role = roleService.get(roleId);
-	        user.getRoles().add(role); // Ajoute les rôles existants à l'utilisateur
-	    }
 
-	    userService.addUser(user); // Ajoute l'utilisateur avec les rôles
+	    // Utiliser la méthode addUser du service pour ajouter un utilisateur avec mot de passe crypté
+	    userService.addUser(user);
+
+	    // Ajouter les rôles à l'utilisateur nouvellement créé
+	    if (roleIds != null) {
+	        StringBuilder rolesStringBuilder = new StringBuilder();
+	        for (String roleId : roleIds) {
+	            Role role = roleService.findByRole(roleId);
+	            if (role != null) {
+	                rolesStringBuilder.append(role.getRole()).append(", ");
+	            } else {
+	                // Gérer le cas où le rôle n'est pas trouvé
+	                System.out.println("Le rôle avec l'ID " + roleId + " n'a pas été trouvé.");
+	            }
+	        }
+
+	        // Supprimer la virgule et l'espace final si des rôles ont été ajoutés
+	        if (rolesStringBuilder.length() > 0) {
+	            rolesStringBuilder.setLength(rolesStringBuilder.length() - 2);
+	        }
+	    }
 
 	    return "redirect:/admin/users";
 	}
+	
+	@GetMapping("users/{id}/edit")
+	public String editUser(Model model, @PathVariable("id") long id, HttpServletRequest request) {
+	    User user = userService.getUser(id);
+
+	    model.addAttribute("user", user);
+
+	    List<Role> roles = roleService.getAll(); 
+
+	    model.addAttribute("roles", roles);
+
+	    String referrer = request.getHeader("Referer");
+
+	    if (referrer != null && !referrer.equals("")) {
+	        model.addAttribute("back", referrer);
+	    } else {
+	        model.addAttribute("back", "/users");
+	    }
+
+	    return "admin/user/edit";
+	}
+	
+	
+	@PutMapping("/users/{id}/edit")
+	public String updateUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult,
+	        @PathVariable("id") long id, Model model) {
+
+	    if (bindingResult.hasErrors()) {
+	        return "/admin/user/edit";
+	    }
+
+	    User existing = userService.getUser(id);
+
+	    if (existing == null) {
+	        return "redirect:/admin/users";
+	    }
+
+
+	    user.setId(id);
+	    userService.updateUser(String.valueOf(user.getId()), user);
+
+	    model.addAttribute("user", user);
+
+	    return "redirect:/admin/users";
+	}
+	
+	/*@DeleteMapping("/users/{id}")
+	public String deleteUser(@PathVariable("id") String id, Model model) {
+	    User existing = userService.getUser(id);
+
+	    if (existing != null) {
+	        for (Role role : existing.getRoles()) {
+	            existing.removeRole(role);
+	        }
+	        userService.deleteUser(id);
+	    }
+
+	    return "redirect:/admin/users";
+	}*/
 	
 	
 	//------------- SHOW -------------//
@@ -105,6 +175,7 @@ public class AdminController {
 		 List<Show> shows = showService.getAll();
 
 	     model.addAttribute("shows", shows);
+	     model.addAttribute("title", "Shows");
 	        
 	    return "admin/show/shows";
 	}
@@ -143,7 +214,7 @@ public class AdminController {
 		if (referrer != null && !referrer.equals("")) {
 			model.addAttribute("back", referrer);
 		} else {
-			model.addAttribute("back", "/artists/" + show.getId());
+			model.addAttribute("back", "/shows");
 		}
 
 		return "admin/show/edit";
@@ -178,9 +249,8 @@ public class AdminController {
 		Show existing = showService.get(id);
 
 		if (existing != null) {
-			Long indice = (long) Integer.parseInt(id);
 
-			showService.delete(String.valueOf(indice));
+			showService.delete(id);
 		}
 
 		return "redirect:/admin/shows";

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.mx/thymeleaf/layout" layout:decorate="~{layouts/main}"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <title>Mon Compte</title>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <div class="container">
+            <div th:if="${user != null}">
+                <h2 th:text="'Bienvenue, ' + ${user.firstname} + ' ' + ${user.lastname}"></h2>
+               
+                <p th:text="'Login: ' + ${user.username}"></p>
+                <p th:text="'First Name: ' + ${user.firstname}"></p>
+                <p th:text="'Last Name: ' + ${user.lastname}"></p>
+                <p th:text="'Email: ' + ${user.email}"></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

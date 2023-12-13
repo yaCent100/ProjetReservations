@@ -16,26 +16,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-@RequestMapping("/show")
+
 @Controller
 public class ShowController {
 
 	
     @Autowired
-    ShowService showService;
+    private ShowService showService;
 
     
-    @GetMapping
+    @GetMapping("/shows")
     public String index(Model model) {
     	
     	 List<Show> shows = showService.getAll();
 
 	     model.addAttribute("shows", shows);
     	
-    	return "admin/main";
+    	return "show/index";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("show/{id}")
     public String show(Model model, @PathVariable("id") String id) {
         Show show = showService.get(id);
 

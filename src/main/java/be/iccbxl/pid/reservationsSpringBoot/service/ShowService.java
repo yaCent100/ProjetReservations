@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,6 +49,16 @@ public class ShowService {
     public List<Show> getFromLocation(Location location) {
         return showRepository.findByLocation(location);
     }
+    
+    public List<Show> getAllShowsSortedByTitle() {
+        List<Show> shows = getAll();
+
+        shows.sort(Comparator.comparing(Show::getTitle));
+
+        return shows;
+    }
+    
+    
 
 
 

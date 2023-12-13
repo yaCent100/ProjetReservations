@@ -3,67 +3,108 @@
 
 <head>
 	<title>Fiche d'un spectacle</title>
-	
-	
+
+
 </head>
 
- 
+
 
 <body>
-		<div layout:fragment="content">
-			<div class="container mt-5">
+	<div layout:fragment="content">
 
-				<h1 th:text="${show.title}">Ayiti</h1>
+		<div class="container mt-5">
 
-				<p th:if="${show.posterUrl}" class="mt-2 align-center" >
-					<img th:src="@{'/images/'+${show.posterUrl}}" th:alt="${show.title}"
-						alt="" width="300">
-				</p>
-				<canvas th:unless="${show.posterUrl}" width="200" height="100"
-					></canvas>
+			<div class="show-card">
+				<div class="image-container">
+					<p th:if="${show.posterUrl}" class="mt-2 align-center">
+						<img th:src="@{'/images/'+${show.posterUrl}}" th:alt="${show.title}" alt="" width="300">
+					</p>
+					<canvas th:unless="${show.posterUrl}" width="200" height="100"></canvas>
+				</div>
 
-				<p th:if="${show.location}"><strong>Lieu de création:</strong> <span
-						th:text="${show.location.designation}">Art Center</span></p>
+				<div class="details-container">
+					<span th:text="${show.location.designation}" class="text-end"></span>
+					<h1 th:text="${show.title}" class="text-center"></h1>
 
-				<p><strong>Prix:</strong> <span th:text="${show.price} + ' €'">9.99 €</span></p>
+					<p th:if="${show.location}">
 
-				<p th:if="${show.bookable}"><em>Réservable</em></p>
-				<p th:unless="${show.bookable}"><em>Non réservable</em></p>
-				
-				
 
-				<h2>Programmes </h2>
-				<ul th:if="${#lists.size(show.representations)>=1}">
-					<li th:each="representation : ${show.representations}"
-						th:text="${#temporals.format(representation.when, 'dd MMMM yyyy HH:mm')}">12 octobre 2012 13:30</li>
-				</ul>
-				<p th:if="${#lists.size(show.representations)==0}">Aucune représentation</p>
 
-				<h2>Liste des artistes</h2>
-				<p><strong>Auteur:</strong>
-					<span th:each="auteur,iter : ${collaborateurs['auteur']}" th:text="${auteur.firstname}+' '+${auteur.lastname}
+					</p>
+
+					<p><strong>Prix:</strong> <span th:text="${show.price} + ' €'">9.99 €</span></p>
+
+					<p th:if="${show.bookable}"><em>Réservable</em></p>
+					<p th:unless="${show.bookable}"><em>Non réservable</em></p>
+
+					<p th:text="${show.description}"></p>
+					<p class="text-end"><strong>Auteur:</strong>
+						<span th:each="auteur,iter : ${collaborateurs['auteur']}" th:text="${auteur.firstname}+' '+${auteur.lastname}
 		        	+ (${iter.count}==${iter.size}-1 ? ' et ':(${iter.last}?'':', '))">
-						Firstname Lastname
-					</span>
-				</p>
-				<p><strong>Metteur en scène:</strong>
-					<span th:each="scenographe,iter : ${collaborateurs['scénographe']}" th:text="${scenographe.firstname}+' '+${scenographe.lastname}
+							Firstname Lastname
+						</span>
+					</p>
+					<p class="text-end"><strong>Metteur en scène:</strong>
+						<span th:each="scenographe,iter : ${collaborateurs['scénographe']}" th:text="${scenographe.firstname}+' '+${scenographe.lastname}
 	        		+ (${iter.count}==${iter.size}-1 ? ' et ':(${iter.last}?'':', '))">
-						Firstname Lastname
-					</span>
-				</p>
-				<p><strong>Distribution:</strong>
-					<span th:each="comedien,iter : ${collaborateurs['comédien']}" th:text="${comedien.firstname}+' '+${comedien.lastname}
+							Firstname Lastname
+						</span>
+					</p>
+					<p class="text-end"><strong>Distribution:</strong>
+						<span th:each="comedien,iter : ${collaborateurs['comédien']}" th:text="${comedien.firstname}+' '+${comedien.lastname}
 	        		+ (${iter.count}==${iter.size}-1 ? ' et ':(${iter.last}?'':', '))">
-						Firstname Lastname
-					</span>
-				</p>
+							Firstname Lastname
+						</span>
+					</p>
 
 
+				</div>
 
-				<nav><a th:href="@{/shows}">Retour à l'index</a></nav>
+
 			</div>
+
+			<div>
+				<h3>Representations</h3>
+
+				<form method="post" th:action="@{/confirmReservation}">
+					<table class="table stripes text-white bg-dark">
+						<thead>
+							<tr>
+								<th>Date</th>
+								<th>Heure</th>
+								<th>Places</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="representation : ${show.representations}">
+								<td th:text="${#temporals.format(representation.when, 'EEEE d MMMM yyyy')}">lundi 12
+									octobre
+									2023</td>
+								<td th:text="${#temporals.format(representation.when, 'HH:mm')}">13:30</td>
+
+								<td>
+									<input type="number" max="10" name="nbPlaces" />
+									<input type="hidden" name="representationWhen" th:value="${representation.when}" />
+								</td>
+								
+
+								<td><button type="submit" class="btn btn-info">Reservez</button></td>
+
+							</tr>
+						</tbody>
+					</table>
+				</form>
+
+				<p th:if="${#lists.size(show.representations) == 0}">Aucune représentation</p>
+			</div>
+
+
+
+
+
+			<nav><a th:href="@{/shows}">Retour à l'index</a></nav>
 		</div>
+	</div>
 
 </body>
 

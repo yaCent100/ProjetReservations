@@ -6,7 +6,6 @@
 </head>
 <body>
 <div class="container">
-  <div layout:fragment="content">
     <article>
       <h1 th:text="'Représentation du '+${date}+' à '+${heure}">
         Représentation du 15/01/2020 à 13:30
@@ -34,6 +33,5 @@
 
     <nav><a th:href="@{/representations}">Retour à l'index</a></nav>
   </div>
-</div>
 </body>
 </html>

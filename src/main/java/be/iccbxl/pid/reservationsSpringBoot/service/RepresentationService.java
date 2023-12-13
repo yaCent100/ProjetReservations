@@ -7,6 +7,9 @@ import be.iccbxl.pid.reservationsSpringBoot.repository.RepresentationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,9 +30,7 @@ public class RepresentationService {
 
     public Representation get(String id) {
         Long indice = (long) Integer.parseInt(id);
-        Optional<Representation> representation = representationRepository.findById(indice);
-
-        return representation.orElse(null);
+        return representationRepository.findById(indice).orElse(null);
     }
 
     public void add(Representation representation) {
@@ -53,5 +54,9 @@ public class RepresentationService {
     public List<Representation> getFromShow(Show show) {
         return representationRepository.findByShow(show);
     }
+
+	public Representation getByWhen(LocalDateTime when) {
+	    return representationRepository.findByWhen(when);
+	}
 
 }

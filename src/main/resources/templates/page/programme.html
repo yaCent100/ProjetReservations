@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.mx/thymeleaf/layout" lang="fr"
+	layout:decorate="~{layouts/main}">
+
+<body>
+	<div layout:fragment="content" class="container">
+		<div class="row mt-2">
+
+			<aside id="aside" class="col-md-3 mt-5">
+				<h5>Recherche avancées</h5>
+				<div class="h-100">
+					<li class="sidebar-item">
+						<a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse"
+							data-bs-target="#sortByOptions" aria-expanded="false" aria-controls="sortByOptions">
+							<i class="fa-solid fa-arrow-up-a-z"></i>
+							Trier
+						</a>
+						<ul id="sortByOptions" class="sidebar-dropdown list-unstyled collapse"
+							data-bs-parent="#sidebar">
+							<li class="sidebar-item">
+								<a href="#" class="sidebar-link">Titre</a>
+							</li>
+							<li class="sidebar-item">
+								<a href="#" class="sidebar-link">Reservable</a>
+							</li>
+							<li class="sidebar-item">
+								<a href="#" class="sidebar-link">Prix : Ordre Croissant</a>
+							</li>
+							<li class="sidebar-item">
+								<a href="#" class="sidebar-link">Prix : Ordre Decroissant</a>
+							</li>
+							<li class="sidebar-item">
+								<a href="#" class="sidebar-link">Lieu</a>
+							</li>
+							<li class="sidebar-item">
+								<a href="#" class="sidebar-link">Programmation</a>
+							</li>
+
+						</ul>
+					</li>
+
+					<li class="sidebar-item">
+						<a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse"
+							data-bs-target="#filterOptions" aria-expanded="false" aria-controls="filterOptions">
+							<i class="fa-solid fa-sort"></i>
+							Filtrer
+						</a>
+						<ul id="filterOptions" class="sidebar-dropdown list-unstyled collapse"
+							data-bs-parent="#sidebar">
+							<li>
+								<input type="checkbox" id="representation" class="sidebar-checkbox">
+								<label for="representation">Representation</label>
+							</li>
+
+							<!-- Exemple pour Reservable -->
+							<li class="sidebar-item">
+								<input type="checkbox" id="Reservable" class="sidebar-checkbox">
+								<label for="typeA" class="sidebar-label">Reservable</label>
+							</li>
+
+							<h6>Prix :</h6>
+							<li class="sidebar-item">
+								<input type="checkbox" id="below10Checkbox" class="sidebar-checkbox">
+								<label for="below10Checkbox" class="sidebar-label">Moins de 10 €</label>
+							</li>
+							<li class="sidebar-item">
+								<input type="checkbox" id="above10Checkbox" class="sidebar-checkbox">
+								<label for="above10Checkbox" class="sidebar-label">Plus de 10 €</label>
+							</li>
+							<h6>Lieu :</h6>
+							<li class="sidebar-item" th:each="show : ${shows}">
+								<span th:each="designation : ${show.location?.designation}">
+									<input type="checkbox" class="sidebar-checkbox">
+									<label class="sidebar-label" th:text="${show.location?.designation}"></label>
+								</span>
+							</li>
+
+							<button class="btn btn-danger" onclick="filter()" >Filtrer</button>
+
+						</ul>
+					</li>
+				</div>
+			</aside>
+
+			<!-- Liste des spectacles à droite -->
+			<div class="col-md-9">
+				<h1>Liste des spectacles</h1>
+
+				<table id="programmeTable" class="table text-light table-borderless">
+					<thead>
+						<tr style="text-align: center;">
+							<th class="col-3">Titre</th>
+							<th class="col-1">Reservable</th>
+							<th class="col-2">Prix</th>
+							<th class="col-3">Lieu</th>
+							<th class="col-3">Programmation</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="show : ${shows}" class="text-center align-middle">
+							<td>
+								<!-- Contenu pour la colonne Titre -->
+								<h5 th:text="${show.title}">Ayiti</h5>
+								<img th:src="@{'/images/' + ${show.posterUrl}}" class="img-fluid"
+									style="max-height: 200px; max-width: 100px;" />
+							</td>
+							<td>
+								<!-- Contenu pour la colonne Prix -->
+								<span th:if="${show.bookable}">Oui</span>
+								<span th:unless="${show.bookable}">Non</span>
+							</td>
+							<td>
+								<!-- Contenu pour la colonne Prix -->
+								<span th:if="${show.bookable}" th:text="${show.price + ' €'}">9.99 €</span>
+							</td>
+
+							<td>
+								<!-- Contenu pour la colonne Lieu -->
+								<span th:if="${show.location}" th:text="${show.location.designation}"></span>
+							</td>
+							<td>
+								<!-- Contenu pour la colonne Disponibilités -->
+								<a th:if="${not #lists.isEmpty(show.representations)}"
+									th:href="@{'/show/' + ${show.id}}" class="custom-list-representation">
+									Representation
+								</a>
+								<p th:if="${#lists.isEmpty(show.representations)}">Aucune Representation</p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+	</div>
+
+
+</body>
+
+</html>

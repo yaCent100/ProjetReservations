@@ -2,75 +2,81 @@ package be.iccbxl.pid.reservationsSpringBoot.service;
 
 import be.iccbxl.pid.reservationsSpringBoot.model.Role;
 import be.iccbxl.pid.reservationsSpringBoot.model.User;
+import be.iccbxl.pid.reservationsSpringBoot.repository.RoleRepository;
 import be.iccbxl.pid.reservationsSpringBoot.repository.UserRepository;
 
+import org.hibernate.validator.internal.util.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
 import java.util.ArrayList;
+
 import java.util.List;
 
+
+
 @Service
-public class UserService implements UserDetailsService{
+public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
-    
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+	@Autowired
+	private UserRepository userRepository;
 
-    public List<User> getAllUsers() {
-    	
-        List<User> users = new ArrayList<>();
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-        userRepository.findAll().forEach(users::add);
+	@Autowired
+	private RoleRepository roleRepository;
 
-        return users;
-    }
+	public List<User> getAllUsers() {
 
-    public User getUser(String id) {
-        int indice = Integer.parseInt(id);
+		List<User> users = new ArrayList<>();
 
-        return userRepository.findById(indice);
-    }
+		userRepository.findAll().forEach(users::add);
 
-    public User addUser(User user) {
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
-        return userRepository.save(user);
-    }
-    
-    public void updateUser(String id, User user) {
-        userRepository.save(user);
-    }
+		return users;
+	}
 
-    public void deleteUser(String id) {
-        Long indice = (long) Integer.parseInt(id);
+	public User getUser(long id) {
+		
+		
+		return userRepository.findById(id);
+		}
 
-        userRepository.deleteById(indice);
-    }
-    
-    public User finByLogin(String login) {
-    	
-    	return userRepository.findByLogin(login);
-    }
+	public void addUser(User user) {
+        Role defaultRole = roleRepository.findByRole("member");
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByLogin(username);
-        if (user == null) {
-            throw new UsernameNotFoundException("Utilisateur non trouvé avec le nom d'utilisateur : " + username);
+        if (defaultRole == null) {
+            System.out.println("Le rôle par défaut 'member' n'a pas été trouvé dans la base de données.");
+            return;
         }
 
-        return org.springframework.security.core.userdetails.User.withUsername(user.getLogin())
-                .password(user.getPassword())
-                .roles(user.getRoles().stream().map(r -> r.getRole()).toArray(String[]::new))
-                .build();
+        try {
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            user.addRole(defaultRole);
+            userRepository.save(user);
+            System.out.println("L'utilisateur a été ajouté avec succès avec le rôle par défaut 'member'.");
+        } catch (Exception e) {
+            System.out.println("Une erreur s'est produite lors de l'ajout de l'utilisateur : " + e.getMessage());
+        }
     }
+	
+	
+	public void updateUser(String id, User user) {
+		userRepository.save(user);
+	}
 
+	public void deleteUser(String id) {
+		Long indice = (long) Integer.parseInt(id);
+
+		userRepository.deleteById(indice);
+	}
+
+	public User findByLogin(String login) {
+
+		return userRepository.findByLogin(login);
+	}
 
 }

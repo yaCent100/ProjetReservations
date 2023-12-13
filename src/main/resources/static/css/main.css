@@ -1,3 +1,38 @@
+/*Main*/
+html, body {
+    height: 100%;
+}
+
+body {
+	background: url('/images/background.jpg'); 
+	background-size: cover; 
+	background-repeat: no-repeat; 
+	background-position: center center;
+	color: aliceblue;
+}
+
+/*header*/
+.navbar {
+    background-image: linear-gradient(to right,rgb(183, 49, 34),rgb(252, 232, 201));
+}
+
+.navbar .nav-item .active {
+    background-color: black; /* Couleur de fond de l'élément actif */
+    color: white; /* Couleur du texte de l'élément actif */
+}
+.imgShow{
+	 width: 100%; /* Définit la largeur de l'image à 100% de la largeur du conteneur */
+    height: 400px; /* Permet de maintenir les proportions de l'image */
+}
+
+
+
+
+
+
+
+/*HOME*/
+
 /* CSS pour les cartes */
 .card {
     border: 1px solid #d1d1d1; /* Bordure de la carte */
@@ -22,6 +57,212 @@
 }
 
 
+/*show*/
+
+.show-card {
+    display: flex;
+    margin: 10px;
+    padding: 10px;
+}
+
+.image-container {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.details-container {
+    flex: 2;
+}
 
 
-/*  bleu #26495c  brun #c4a35a  orange #c66b3d   gris #e5e5dc
+/*Login*/
+
+.h1Login {
+    font-family: 'Lobster', cursive;
+    font-size: 6rem; 
+    color: rgb(0, 0, 0);
+    text-align: center; 
+    margin-bottom: 5rem;
+    
+    
+}
+
+
+
+
+
+
+/*register*/
+
+.register{
+    /*background: -webkit-linear-gradient(left, #3931af, #00c6ff);*/
+    background-image: url('/images/fondInscription.jpg');
+    background-size: cover; /* Pour couvrir toute la zone du conteneur */
+    background-repeat: no-repeat;
+    margin-top: 3%;
+    padding: 3%;
+    height: auto;
+    width: 1000px;
+}
+.register-left{
+    text-align: center;
+    color: #fff;
+    margin-top: 4%;
+}
+.register-left input{
+    border: none;
+    border-radius: 1.5rem;
+    padding: 2%;
+    width: 60%;
+    background: #f8f9fa;
+    font-weight: bold;
+    color: #383d41;
+    margin-top: 30%;
+    margin-bottom: 3%;
+    cursor: pointer;
+}
+.register-right{
+    background: #f8f9fa;
+    border-top-left-radius: 10% 50%;
+    border-bottom-left-radius: 10% 50%;
+}
+.register-left img{
+    margin-top: 15%;
+    margin-bottom: 5%;
+    width: 25%;
+    -webkit-animation: mover 2s infinite  alternate;
+    animation: mover 1s infinite  alternate;
+}
+@-webkit-keyframes mover {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-20px); }
+}
+@keyframes mover {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-20px); }
+}
+.register-left p{
+    font-weight: lighter;
+    padding: 12%;
+    margin-top: -9%;
+}
+.register .register-form{
+    padding: 10%;
+    margin-top: 10%;
+
+}
+.btnRegister{
+    float: right;
+    margin-top: 10%;
+    border: none;
+    border-radius: 1.5rem;
+    padding: 2%;
+    background: #0062cc;
+    color: #fff;
+    font-weight: 600;
+    width: 50%;
+    cursor: pointer;
+}
+.register .nav-tabs{
+    margin-top: 3%;
+    border: none;
+    background: #0062cc;
+    border-radius: 1.5rem;
+    width: 28%;
+    float: right;
+}
+.register .nav-tabs .nav-link{
+    padding: 2%;
+    height: 34px;
+    font-weight: 600;
+    color: #fff;
+    border-top-right-radius: 1.5rem;
+    border-bottom-right-radius: 1.5rem;
+}
+.register .nav-tabs .nav-link:hover{
+    border: none;
+}
+.register .nav-tabs .nav-link.active{
+    width: 100px;
+    color: #0062cc;
+    border: 2px solid #0062cc;
+    border-top-left-radius: 1.5rem;
+    border-bottom-left-radius: 1.5rem;
+}
+.register-heading{
+    text-align: center;
+    margin-top: 8%;
+    margin-bottom: -15%;
+    color: #495057;
+    font-family: 'Dancing script' ;
+    font-size: 4em;
+    
+}
+
+
+/*PROGRAMME PAGE*/
+
+.custom-list-representation {
+            background-color: red; /* Fond rouge par défaut */
+            color: yellow; /* Texte jaune */
+            transition: all 0.3s ease; /* Transition fluide */
+            padding: 5px; /* Espacement */
+            margin: 5px 0; /* Marge supérieure et inférieure */
+            margin-top: 10px;
+             list-style-type: none;
+              transform: scale(1);
+       }
+
+.custom-list-representation:hover {
+            background-color: green; /* Fond vert au survol */
+            color: white; /* Texte blanc au survol */
+            transform: scale(1.1); /* Zoom au survol */
+
+        }
+        
+/*SIDEBAR PROGRAMME*/
+
+
+a.sidebar-link {
+    padding: .625rem 1.625rem;
+    color: #e9ecef;
+    position: relative;
+    display: block;
+    font-size: 1rem;
+}
+
+.sidebar-link[data-bs-toggle="collapse"]::after {
+    border: solid;
+    border-width: 0 .075rem .075rem 0;
+    content: "";
+    display: inline-block;
+    padding: 2px;
+    position: absolute;
+    right: 1.5rem;
+    top: 1.4rem;
+    transform: rotate(-135deg);
+    transition: all .2s ease-out;
+    font-size: 1.5em;
+}
+
+.sidebar-link[data-bs-toggle="collapse"].collapsed::after {
+    transform: rotate(45deg);
+    transition: all .2s ease-out;
+    font-size: 1.5em;
+
+}
+
+.sidebar-item {
+    list-style: none;
+}
+
+.sidebar-item a {
+    text-decoration: none; 
+    display: block;
+    justify-content: center; 
+    align-items: center;
+    font-size: 1.2rem; 
+    
+}
+
+

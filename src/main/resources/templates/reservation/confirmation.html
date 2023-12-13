@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.mx/thymeleaf/layout" layout:decorate="~{layouts/main}">
+
+<head>
+	<title>Confirmation</title>
+	<script src="https://js.stripe.com/v3/"></script>
+</head>
+
+<body>
+
+	<div layout:fragment="content">
+		<div class="container">
+			<h2>Confirmation de réservation</h2>
+
+			<div th:if="${username != null}">
+
+				<p>Utilisateur : <span th:text="${username}"></span></p>
+			</div>
+			<div th:if="${username != null}">
+
+				<p>Nombre de places : <span th:text="${nbPlaces}"></span></p>
+			</div>
+			<h3>Détails de la représentation :</h3>
+
+			<div th:if="${representation != null}">
+				<div th:if="${representation != null}">
+					<p>Date : <span th:text="${#temporals.format(representation.when, 'yyyy-MM-dd')}"></span></p>
+					<p>Heure : <span th:text="${#temporals.format(representation.when, 'HH:mm')}"></span></p>
+					<p>Show : <span th:text="${representation.show.title}"></span></p>
+					<img th:src="@{'/images/' + ${representation.show.posterUrl}}" alt="Poster du spectacle" width="300" />
+					
+					        <p>Total : <span th:text="${representation.show.price * nbPlaces}"></span> €</p>
+
+				</div>
+
+			</div>
+
+			<form method="post" action="/saveReservation"> <!-- Formulaire pour enregistrer la réservation -->
+				<!-- Ajoutez des champs cachés pour les données à enregistrer -->
+				<input type="hidden" name="nbPlaces" th:value="${nbPlaces}" />
+
+				<button class="btn btn-success">Confirmer la réservation</button>
+			</form>
+		</div>
+	</div>
+	
+	
+</body>
+
+</html>

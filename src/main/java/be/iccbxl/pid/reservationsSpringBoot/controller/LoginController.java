@@ -1,7 +1,8 @@
 package be.iccbxl.pid.reservationsSpringBoot.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,34 +10,47 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import be.iccbxl.pid.reservationsSpringBoot.model.User;
-import be.iccbxl.pid.reservationsSpringBoot.service.UserService;
+import be.iccbxl.pid.reservationsSpringBoot.security.CustomUserDetailService;
+import be.iccbxl.pid.reservationsSpringBoot.security.CustomUserDetails;
 
 @Controller
 public class LoginController {
 
-    @Autowired
-    private UserService userService;
+	@Autowired
+    private CustomUserDetailService customUserDetailService;
+	
+	@Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
     
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/login")
-    public String showLogin(Model model) {
+    public String login(Model model) {
     	
-        model.addAttribute("user", User.createInstance()); 
-        
-        return "login/login"; 
+        return "login/login";
     }
+    
+    
 
-    @PostMapping("/processlogin")
-    public String processLogin(@ModelAttribute("user") User user) {
-        User existingUser = userService.finByLogin(user.getLogin());
+    @PostMapping("/login")
+    public String processLogin(@ModelAttribute("loginUser") User loginUser, Model model) {
+        CustomUserDetails user = (CustomUserDetails) customUserDetailService.loadUserByUsername(loginUser.getLogin());
 
-        if (existingUser != null && passwordEncoder.matches(user.getPassword(), existingUser.getPassword())) {
+        if (user != null && bCryptPasswordEncoder.matches(loginUser.getPassword(), user.getPassword())) {
+            System.out.println("User role: " + user.getAuthorities());
             return "redirect:/home";
-        } else {
-            return "redirect:/login?error";
         }
+
+        return "redirect:/login?error";
     }
+
+
+
+
+
+
+
+    
+
 }
+    
 

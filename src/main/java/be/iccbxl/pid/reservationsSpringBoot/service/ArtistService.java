@@ -41,4 +41,10 @@ public class ArtistService {
 
     }
 
+	public List<Artist> findByLastname(String artistName) {
+		return artistRepository.findByLastname(artistName);
+	}
+    
+    
+
 }
