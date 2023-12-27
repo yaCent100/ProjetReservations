@@ -27,7 +27,7 @@ public class RepresentationController {
     }
 
     @GetMapping("/representations/{id}")
-    public String show(Model model, @PathVariable("id") String id) {
+    public String show(Model model, @PathVariable("id") long id) {
         Representation representation = representationService.get(id);
 
         model.addAttribute("representation", representation);

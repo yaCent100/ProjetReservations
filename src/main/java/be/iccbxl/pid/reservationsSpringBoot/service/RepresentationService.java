@@ -7,12 +7,9 @@ import be.iccbxl.pid.reservationsSpringBoot.repository.RepresentationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class RepresentationService {
@@ -28,9 +25,8 @@ public class RepresentationService {
         return representations;
     }
 
-    public Representation get(String id) {
-        Long indice = (long) Integer.parseInt(id);
-        return representationRepository.findById(indice).orElse(null);
+    public Representation get(Long id) {
+        return representationRepository.findById(id).orElse(null);
     }
 
     public void add(Representation representation) {

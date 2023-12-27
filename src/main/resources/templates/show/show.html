@@ -32,7 +32,6 @@
 
 					</p>
 
-					<p><strong>Prix:</strong> <span th:text="${show.price} + ' €'">9.99 €</span></p>
 
 					<p th:if="${show.bookable}"><em>Réservable</em></p>
 					<p th:unless="${show.bookable}"><em>Non réservable</em></p>
@@ -56,6 +55,9 @@
 							Firstname Lastname
 						</span>
 					</p>
+					
+					<p class="mt-5 text-end fs-4"><span th:text="${show.price} + ' €'">9.99 €</span></p>
+
 
 
 				</div>
@@ -83,10 +85,13 @@
 								<td th:text="${#temporals.format(representation.when, 'HH:mm')}">13:30</td>
 
 								<td>
-									<input type="number" max="10" name="nbPlaces" />
+									<select name="nbPlaces">
+										<option th:each="i : ${#numbers.sequence(1, 10)}" th:value="${i}"
+											th:text="${i}"></option>
+									</select>
 									<input type="hidden" name="representationWhen" th:value="${representation.when}" />
 								</td>
-								
+
 
 								<td><button type="submit" class="btn btn-info">Reservez</button></td>
 

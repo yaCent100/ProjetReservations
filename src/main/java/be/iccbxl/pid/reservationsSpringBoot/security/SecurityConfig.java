@@ -45,9 +45,10 @@ public class SecurityConfig  {
 		
 			return http.authorizeHttpRequests(auth -> {
 				//auth.requestMatchers("/admin").hasRole("ADMIN");
-				auth.requestMatchers("/profil").hasRole("member");
+				auth.requestMatchers("/user/**").hasRole("member");
 				auth.requestMatchers("/css/**", "/js/**", "/images/**").permitAll();
-				auth.requestMatchers("/login", "/register", "/admin/**", "/exportCSV", "rss/shows", "/confirmationReservation").permitAll();
+				auth.requestMatchers("/login", "/register", "/admin/**", "/exportCSV", "rss/shows", "/confirmationReservation", "/create-payment-intent"
+						,"/stripe/**").permitAll();   
                 auth.anyRequest().authenticated();
 			})
 					

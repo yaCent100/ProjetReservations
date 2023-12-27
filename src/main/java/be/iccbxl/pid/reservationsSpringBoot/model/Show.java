@@ -1,5 +1,6 @@
 package be.iccbxl.pid.reservationsSpringBoot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.slugify.Slugify;
 
 import jakarta.persistence.*;

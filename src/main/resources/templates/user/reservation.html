@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.mx/thymeleaf/layout" layout:decorate="~{layouts/main}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<title>Mes Reservations</title>
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			var randomRefNumbers = document.querySelectorAll('.randomRefNumber');
+
+			randomRefNumbers.forEach(function (element) {
+				element.textContent = Math.floor(Math.random() * 90000) + 10000;
+			});
+		});
+	</script>
+</head>
+
+<body>
+
+	<div layout:fragment="content">
+		<div class="container">
+			<h1>Mes Réservations</h1>
+			<table class="table-striped">
+				<thead>
+					<tr>
+						<th>N° ref</th>
+						<th>Date de représentation</th>
+						<th>Show</th>
+						<!-- Ajoutez d'autres en-têtes de colonnes si nécessaire -->
+					</tr>
+				</thead>
+				<tbody>
+					<!-- Utilisez Thymeleaf pour parcourir et afficher les représentations réservées -->
+					<tr th:each="representation : ${userRepresentations}">
+						<td class="randomRefNumber"></td>
+						<td th:text="${representation.when}"></td>
+						<td th:text="${representation.show.title}"></td>
+						<!-- Ajoutez d'autres cellules pour afficher d'autres détails de la représentation -->
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
+	</div>
+
+
+</body>
+
+</html>

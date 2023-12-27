@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.github.slugify.Slugify;
 
 @Data
@@ -20,7 +22,7 @@ public class Representation {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
-
+    
     @ManyToOne
     @JoinColumn(name="show_id", nullable=false)
     private Show show;
@@ -36,8 +38,9 @@ public class Representation {
     @ManyToOne
     @JoinColumn(name="location_id", nullable=true)
     private Location location;
-
-    @ManyToMany
+    
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(
             name = "reservations",
             joinColumns = @JoinColumn(name = "representation_id"),
