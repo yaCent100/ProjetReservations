@@ -46,6 +46,9 @@ public class Representation {
             joinColumns = @JoinColumn(name = "representation_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> users = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "representation")
+    private List<Reservation> reservations = new ArrayList<>();
 
 
     public Representation addUser(User user) {
@@ -66,6 +69,7 @@ public class Representation {
         return this;
     }
 
+    
 
 
 

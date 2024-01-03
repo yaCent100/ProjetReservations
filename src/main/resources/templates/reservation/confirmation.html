@@ -2,47 +2,54 @@
 <html xmlns:layout="http://www.ultraq.net.mx/thymeleaf/layout" layout:decorate="~{layouts/main}">
 
 <head>
-    <title>Confirmation</title>
+	<title>Confirmation</title>
 </head>
 
 <body>
 
-    <div layout:fragment="content">
-        <div class="container">
-            <div class="row mt-5">
-                <div class="col-md-6">
-                    <div th:if="${representation != null}" class="text-center">
+	<div layout:fragment="content">
+		<div class="container">
+			<div class="row mt-5">
+				<div class="col-md-6 offset-md-3 text-center mb-5" style="border: 5px solid black;">
+					<h2 class="text-center m-1">Confirmation de réservation</h2>
 
-                        <!-- Utilisation d'une expression Thymeleaf pour l'image -->
-                        <img th:src="@{'/images/' + ${representation.show.posterUrl}}" alt="Poster du spectacle" width="300" />
+					<div th:if="${representation != null}" class="text-center">
 
-                        <!-- Calculer le total sans accéder directement à la propriété 'price' -->
+						<!-- Utilisation d'une expression Thymeleaf pour l'image -->
+						<img th:src="@{'/images/' + ${representation.show.posterUrl}}" alt="Poster du spectacle"
+							class="img-fluid" width="150" />
 
-                    </div>
-                </div>
-                <div class="col-md-6">
+						<!-- Calculer le total sans accéder directement à la propriété 'price' -->
 
-                    <h2 class="text-center">Confirmation de réservation</h2>
-                    <h5 class="mt-5">Détails de la représentation :</h5>
-                    <p><strong>Vous avez choisi une représentation le :</strong> <span th:text="${#temporals.format(representation.when, 'yyyy-MM-dd HH:mm')}"></span></p>
-                    <!-- Afficher le titre du spectacle sans référence circulaire -->
-                    <p><strong>Titre du spectacle :</strong> <span th:text="${representation.show.title}"></span></p>
+					</div>
+					<div>
+					<h5 class="mt-5">Détails</h5>
+					<strong>Vous avez choisi une représentation le </strong>
+					<span th:text="${#temporals.format(representation.when, 'd MMMM yyyy à HH:mm')}"></span>
+					<p><strong>Titre du spectacle :</strong> <span th:text="${representation.show.title}"></span></p>
 
-                    <div th:if="${username != null}">
-                        <p><strong>Utilisateur :</strong> <span th:text="${username}"></span></p>
-                    </div>
-                    <div th:if="${username != null}">
-                        <p><strong>Nombre de places :</strong> <span th:text="${nbPlaces}"></span></p>
-                    </div>
-                    <p><strong>Total à payer :</strong> <span th:text="${#numbers.formatDecimal(representation.show.price * nbPlaces, 2, 'COMMA', 2, 'POINT')}"></span> €</p>
+					<div th:if="${username != null}">
+						<p><strong>Utilisateur :</strong> <span th:text="${username}"></span></p>
+					</div>
+					<div th:if="${username != null}">
+						<p><strong>Nombre de places :</strong> <span th:text="${nbPlaces}"></span></p>
+					</div>
+					<p class="text-start">
+						<strong>Total à payer</strong><br> <span
+							th:utext="${#numbers.formatDecimal(representation.show.price * nbPlaces, representation.show.price * nbPlaces >= 10 ? 2 : 1, 'COMMA', 2, 'POINT')}"></span>
+						€
+					</p>
 
-                    <form th:action="@{/checkout}" th:method="POST">
-                        <button type="submit" class="btn btn-primary">Procéder au paiement</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+					<form th:action="@{/checkout}" th:method="POST">
+						<button type="submit" class="btn btn-primary">Procéder au paiement</button>
+					</form>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
 
 </body>
 

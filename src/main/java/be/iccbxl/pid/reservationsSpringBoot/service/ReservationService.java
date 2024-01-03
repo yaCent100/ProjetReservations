@@ -1,5 +1,6 @@
 package be.iccbxl.pid.reservationsSpringBoot.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import be.iccbxl.pid.reservationsSpringBoot.dto.RepresentationDTO;
-import be.iccbxl.pid.reservationsSpringBoot.dto.ReservationDTO;
 import be.iccbxl.pid.reservationsSpringBoot.dto.UserDTO;
 import be.iccbxl.pid.reservationsSpringBoot.model.Representation;
 import be.iccbxl.pid.reservationsSpringBoot.model.Reservation;
@@ -59,9 +59,26 @@ public class ReservationService {
 	        reservation.setNbPlaces(nbPlaces);
 	        reservation.setRepresentation(representation);
 	        reservation.setUser(user);
+	        reservation.setCreatedAt(LocalDateTime.now());
+
 
 	        return reservationRepository.save(reservation);
 	    }
+	    
+	    public Reservation getReservationByRepresentation(Representation representation) {
+	        return reservationRepository.findByRepresentation(representation);
+	    }
+
+		public List<Reservation> getReservationsByUser(User currentUser) {
+
+			return reservationRepository.findReservationsByUser(currentUser);
+		}
+	    
+
+
+
+
+	
 	 
 	 
 }

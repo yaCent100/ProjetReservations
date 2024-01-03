@@ -104,5 +104,13 @@ public class User {
     public static User createInstance() {
     	return new User();
     }
+    
+    public List<Reservation> getReservations() {
+        List<Reservation> reservations = new ArrayList<>();
+        for (Representation representation : representations) {
+            reservations.addAll(representation.getReservations());
+        }
+        return reservations;
+    }
 
 }

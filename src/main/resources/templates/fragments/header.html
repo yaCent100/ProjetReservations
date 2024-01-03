@@ -18,6 +18,7 @@
 		<nav class="navbar navbar-expand-lg navbar-light p-2 fs-5">
 			<div class="container-fluid d-flex justify-content-between">
 				<a class="navbar-brand" th:href="@{/home}"><i class="fa-solid fa-masks-theater"></i>ShopUpNow</a>
+
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
 					data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
 					aria-label="Toggle navigation">
@@ -29,36 +30,36 @@
 						<li class="nav-item">
 							<a class="nav-link mx-2" id="programme" th:href="@{/shows}">Programmes</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link mx-2" id="calendrier" href="#">Calendrier</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link mx-2" id="billeterie" href="#">Billeterie</a>
-						</li>
+
 					</ul>
 				</div>
 
 				<ul class="navbar-nav">
-					<div sec:authorize="isAuthenticated()">
-						<li class="nav-item dropdown dropstart">
-							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-								th:text="${#authentication.principal.username}"><i class="bi bi-person-circle"></i> </a>
-							<div class="dropdown-menu dropdown-menu-start" aria-labelledby="navbarDropdown">
-								<a class="dropdown-item" th:href="@{/profil}">Mon Compte</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" th:href="@{/logout}">Déconnexion</a>
-							</div>
-						</li>
-					</div>
-					<div sec:authorize="!isAuthenticated()" class="d-flex justify-content-between">
-						<li class="nav-item">
-							<a class="nav-link" th:href="@{/login}">Se Connecter</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" th:href="@{/register}">Inscription</a>
-						</li>
-					</div>
+					<li th:if="${#authorization.expression('isAuthenticated()')}" class="nav-item">
+						<a class="nav-link fs-6" th:href="@{/account}"><i class="fa-regular fa-circle-user"></i>
+							Mon Compte </a>
+					</li>
+					<li th:if="${#authorization.expression('isAuthenticated()')}" class="nav-item">
+						<a class="nav-link fs-6" th:href="@{/logout}"><i class="fa-solid fa-right-from-bracket"></i>
+							Déconnexion</a>
+					</li>
+					<li th:if="${#authorization.expression('!isAuthenticated()')}" class="nav-item">
+						<a class="nav-link fs-6" th:href="@{/login}"><i class="fa-solid fa-right-to-bracket"></i> Se
+							Connecter</a>
+					</li>
+					<li th:if="${#authorization.expression('!isAuthenticated()')}" class="nav-item">
+						<a class="nav-link fs-6" th:href="@{/register}"><i class="fa-solid fa-file-signature"></i>
+							Inscription</a>
+					</li>
+
+				</ul>
+				<ul class="navbar-nav">
+
+
+					<li><a th:href="@{/change-lang?lang=fr}">FR</a></li><span> - </span>
+					<li><a th:href="@{/change-lang?lang=en}">EN</a></li>
+
+
 				</ul>
 
 			</div>

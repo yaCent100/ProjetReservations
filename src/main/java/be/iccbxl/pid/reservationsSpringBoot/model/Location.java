@@ -27,6 +27,7 @@ public class Location {
     @ManyToOne
     @JoinColumn(name="locality_id", nullable=false)
     private Locality locality;
+    
     private String website;
     private String phone;
 

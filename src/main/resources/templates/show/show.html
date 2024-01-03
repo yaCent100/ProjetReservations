@@ -4,113 +4,152 @@
 <head>
 	<title>Fiche d'un spectacle</title>
 
-
 </head>
-
-
 
 <body>
 	<div layout:fragment="content">
 
-		<div class="container mt-5">
+		<div class="container mt-5 ">
 
-			<div class="show-card">
-				<div class="image-container">
+			<h1 th:text="${show.title}" class="bg-black text-center "></h1>
+
+			<div class="row m-0" style="border: 5px solid black;">
+
+				<div class="col-lg-6 d-flex justify-content-center p-0">
 					<p th:if="${show.posterUrl}" class="mt-2 align-center">
-						<img th:src="@{'/images/'+${show.posterUrl}}" th:alt="${show.title}" alt="" width="300">
+						<img th:src="@{'/images/'+${show.posterUrl}}" th:alt="${show.title}" class="img-fluid" alt=""
+							width="200">
 					</p>
 					<canvas th:unless="${show.posterUrl}" width="200" height="100"></canvas>
 				</div>
+				<div class="col-lg-6 d-flex justify-content-center p-0">
+					<div id="map" style="height: 400px;width: 400px;" th:data-address="${show.location.address}"
+						th:data-postal-code="${show.location.locality.postalCode}"
+						th:data-locality="${show.location.locality.locality}"
+						th:data-designation="${show.location.designation}">
 
-				<div class="details-container">
-					<span th:text="${show.location.designation}" class="text-end"></span>
-					<h1 th:text="${show.title}" class="text-center"></h1>
-
-					<p th:if="${show.location}">
-
-
-
-					</p>
-
-
-					<p th:if="${show.bookable}"><em>Réservable</em></p>
-					<p th:unless="${show.bookable}"><em>Non réservable</em></p>
-
-					<p th:text="${show.description}"></p>
-					<p class="text-end"><strong>Auteur:</strong>
-						<span th:each="auteur,iter : ${collaborateurs['auteur']}" th:text="${auteur.firstname}+' '+${auteur.lastname}
-		        	+ (${iter.count}==${iter.size}-1 ? ' et ':(${iter.last}?'':', '))">
-							Firstname Lastname
-						</span>
-					</p>
-					<p class="text-end"><strong>Metteur en scène:</strong>
-						<span th:each="scenographe,iter : ${collaborateurs['scénographe']}" th:text="${scenographe.firstname}+' '+${scenographe.lastname}
-	        		+ (${iter.count}==${iter.size}-1 ? ' et ':(${iter.last}?'':', '))">
-							Firstname Lastname
-						</span>
-					</p>
-					<p class="text-end"><strong>Distribution:</strong>
-						<span th:each="comedien,iter : ${collaborateurs['comédien']}" th:text="${comedien.firstname}+' '+${comedien.lastname}
-	        		+ (${iter.count}==${iter.size}-1 ? ' et ':(${iter.last}?'':', '))">
-							Firstname Lastname
-						</span>
-					</p>
-					
-					<p class="mt-5 text-end fs-4"><span th:text="${show.price} + ' €'">9.99 €</span></p>
-
-
-
+					</div>
 				</div>
 
+			</div>
+
+			<div class="row m-0">
+
+
+
+				<div class="col-md-6 m-0 p-1 bg-dark " style="border: 5px solid black;">
+					<h3 th:text="#{showDescription.message}" class="bg-black m-0 text-center"
+						style="border: 5px solid black;">Description</h3>
+
+					<div class="m-2">
+						<p th:text="${show.description}" class="text-center mt-3"></p>
+
+						<div class="text-center">
+
+							<br><span class="text-center"><strong
+									th:text="#{showAuteur.message}">Auteur</strong></span><br>
+							<span th:each="auteur,iter : ${collaborateurs['auteur']}" th:text="${auteur.firstname}+' '+${auteur.lastname}
+		        	+ (${iter.count}==${iter.size}-1 ? ' et ':(${iter.last}?'':', '))" class="text-center">
+								Firstname Lastname
+							</span>
+							</span>
+							<br><span class="text-center"><strong th:text="#{showMetteur.message}">Metteur en
+									scène</strong></span><br>
+							<span th:each="scenographe,iter : ${collaborateurs['scénographe']}" th:text="${scenographe.firstname}+' '+${scenographe.lastname}
+	        		+ (${iter.count}==${iter.size}-1 ? ' et ':(${iter.last}?'':', '))" class="text-center">
+								Firstname Lastname
+							</span>
+							</span>
+							<br><span class="text-center"><strong
+									th:text="#{showDistribution.message}">Distribution</strong><br></span>
+							<span th:each="comedien,iter : ${collaborateurs['comédien']}" th:text="${comedien.firstname}+' '+${comedien.lastname}
+	        		+ (${iter.count}==${iter.size}-1 ? ' et ':(${iter.last}?'':', '))" class="text-center">
+								Firstname Lastname
+							</span>
+							</span>
+						</div>
+
+
+					</div><br>
+					<div class="text-end fs-4 text-info">
+						<span>Prix : <span th:text="${show.price} + ' €'">9.99 €</span></span>
+
+					</div>
+				</div>
+
+				<div class="col-md-6 bg-dark p-1" style="border: 5px solid black;">
+					<h3 th:text="#{showHoraire.message}" class="bg-black m-0 text-center"
+						style="border: 5px solid black;">Horaires</h3>
+					<form method="post" th:action="@{/confirmReservation}" class="m-2">
+						<table class="table stripes text-white bg-transparent ">
+							<thead>
+								<tr>
+									<th th:text="#{showDate.message}">Date</th>
+									<th th:text="#{showHeure.message}">Heure</th>
+									<th th:text="#{showPlace.message}">Places</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="representation : ${show.representations}">
+									<td th:text="${#temporals.format(representation.when, 'EEEE d MMMM yyyy')}">lundi 12
+										octobre
+										2023</td>
+									<td th:text="${#temporals.format(representation.when, 'HH:mm')}">13:30</td>
+
+									<td>
+										<select name="nbPlaces" id="nbPlaces">
+											<option th:each="i : ${#numbers.sequence(1, 10)}" th:value="${i}"
+												th:text="${i}">
+											</option>
+										</select>
+										<input type="hidden" name="representationWhen"
+											th:value="${representation.when}" />
+									</td>
+
+
+									<td><button th:text="#{showReserver.message}" type="submit" class="btn btn-info"
+											id="reserveButton">Reservez</button>
+									</td>
+
+								</tr>
+							</tbody>
+						</table>
+					</form>
+
+					<p th:if="${#lists.size(show.representations) == 0}">Aucune représentation à venir</p>
+				</div>
 
 			</div>
+
 
 			<div>
-				<h3>Representations</h3>
+				<h3 class="bg-black m-0 text-center" style="border: 5px solid black;"></h3>
+			</div>
 
-				<form method="post" th:action="@{/confirmReservation}">
-					<table class="table stripes text-white bg-dark">
-						<thead>
-							<tr>
-								<th>Date</th>
-								<th>Heure</th>
-								<th>Places</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr th:each="representation : ${show.representations}">
-								<td th:text="${#temporals.format(representation.when, 'EEEE d MMMM yyyy')}">lundi 12
-									octobre
-									2023</td>
-								<td th:text="${#temporals.format(representation.when, 'HH:mm')}">13:30</td>
-
-								<td>
-									<select name="nbPlaces">
-										<option th:each="i : ${#numbers.sequence(1, 10)}" th:value="${i}"
-											th:text="${i}"></option>
-									</select>
-									<input type="hidden" name="representationWhen" th:value="${representation.when}" />
-								</td>
-
-
-								<td><button type="submit" class="btn btn-info">Reservez</button></td>
-
-							</tr>
-						</tbody>
-					</table>
-				</form>
-
-				<p th:if="${#lists.size(show.representations) == 0}">Aucune représentation</p>
+			<div class="bg-dark text-center" style="border: 5px solid black;">
+				<span th:if="${show.location != null and show.location.designation != null}"
+					th:text="${show.location.designation}" class="text-center mt-2"></span><br>
+				<span th:if="${show.location != null and show.location.address != null}"
+					th:text="${show.location.address}" class="text-center"></span><br>
+				<span
+					th:if="${show.location != null and show.location.locality != null and show.location.locality.postalCode != null}"
+					th:text="${show.location.locality.postalCode}" class="text-center"></span>,
+				<span
+					th:if="${show.location != null and show.location.locality != null and show.location.locality.locality != null}"
+					th:text="${show.location.locality.locality}" class="text-center"></span><br>
+				<span th:if="${show.location != null and show.location.website != null}"
+					th:text="${show.location.website}" class="text-center"></span><br>
+				<span th:if="${show.location != null and show.location.phone != null}" th:text="${show.location.phone}"
+					class="text-center"></span><br>
 			</div>
 
 
 
 
+		</div><br><br><br>
 
-			<nav><a th:href="@{/shows}">Retour à l'index</a></nav>
-		</div>
 	</div>
-
+	
 </body>
 
 </html>

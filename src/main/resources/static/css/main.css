@@ -1,15 +1,15 @@
 /*Main*/
-html, body {
-    height: 100%;
-}
+
 
 body {
-	background: url('/images/background.jpg'); 
-	background-size: cover; 
-	background-repeat: no-repeat; 
-	background-position: center center;
-	color: aliceblue;
+    background: url('/images/background.jpg'); 
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    background-position: center center;
+    color: aliceblue;
+    background-attachment: fixed; 
 }
+
 
 /*header*/
 .navbar {

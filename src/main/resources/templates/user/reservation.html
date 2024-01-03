@@ -3,47 +3,41 @@
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-	<title>Mes Reservations</title>
-	<script>
-		document.addEventListener("DOMContentLoaded", function () {
-			var randomRefNumbers = document.querySelectorAll('.randomRefNumber');
-
-			randomRefNumbers.forEach(function (element) {
-				element.textContent = Math.floor(Math.random() * 90000) + 10000;
-			});
-		});
-	</script>
+	<title>Mes Réservations</title>
 </head>
 
 <body>
-
 	<div layout:fragment="content">
 		<div class="container">
-			<h1>Mes Réservations</h1>
-			<table class="table-striped">
+			<h1 class="m-3 p-1">Mes Réservations</h1>
+			<table id="reservationTable" class="table-striped">
 				<thead>
 					<tr>
 						<th>N° ref</th>
+						<th>Date de création</th> 
 						<th>Date de représentation</th>
 						<th>Show</th>
-						<!-- Ajoutez d'autres en-têtes de colonnes si nécessaire -->
+						<th>Nombre de places</th>
+						<th>Total</th>
 					</tr>
 				</thead>
 				<tbody>
-					<!-- Utilisez Thymeleaf pour parcourir et afficher les représentations réservées -->
-					<tr th:each="representation : ${userRepresentations}">
-						<td class="randomRefNumber"></td>
-						<td th:text="${representation.when}"></td>
-						<td th:text="${representation.show.title}"></td>
-						<!-- Ajoutez d'autres cellules pour afficher d'autres détails de la représentation -->
+					<tr th:each="reservation : ${userReservations}">
+						<td th:text="${reservation.id}"></td>
+						<td th:text="${#temporals.format(reservation.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
+						<td th:text="${#temporals.format(reservation.representation.when, 'd MMMM yyyy à HH:mm')}"></td>
+						<td th:text="${reservation.representation.show.title}"></td>
+						<td th:text="${reservation.nbPlaces}"></td>
+						<td>
+							<span
+								th:text="${#numbers.formatDecimal(reservation.representation.show.price * reservation.nbPlaces, 2, 'COMMA', 2, 'POINT')}"></span>
+							€
+						</td>
 					</tr>
 				</tbody>
 			</table>
-
 		</div>
 	</div>
-
-
 </body>
 
 </html>

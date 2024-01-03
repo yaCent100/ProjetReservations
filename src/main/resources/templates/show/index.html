@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.mx/thymeleaf/layout" lang="fr"
 	layout:decorate="~{layouts/main}">
-
+<head>
+	<title>Shows</title>
+</head>
 <body>
 	<div layout:fragment="content" class="container">
 		<div class="row mt-2">
@@ -121,9 +123,8 @@
 								<!-- Contenu pour la colonne Disponibilités -->
 								<a th:if="${not #lists.isEmpty(show.representations)}"
 									th:href="@{'/show/' + ${show.id}}" class="custom-list-representation">
-									Reserver
+									Voir plus
 								</a>
-								<p th:if="${#lists.isEmpty(show.representations)}">Complet</p>
 							</td>
 						</tr>
 					</tbody>
