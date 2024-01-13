@@ -5,66 +5,69 @@
 <head>
 	<meta charset="utf-8">
 	<title>Header fragment</title>
-
-
 </head>
-
 
 <body>
 	<header th:fragment="header">
 
-
-
-		<nav class="navbar navbar-expand-lg navbar-light p-2 fs-5">
+		<nav class="navbar navbar-expand-lg navbar-light p-0 fs-5">
 			<div class="container-fluid d-flex justify-content-between">
-				<a class="navbar-brand" th:href="@{/home}"><i class="fa-solid fa-masks-theater"></i>ShopUpNow</a>
+				<a class="navbar-brand" th:href="@{/home}">
+					<i class="fa-solid fa-masks-theater"></i> ShopUpNow
+				</a>
 
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-					data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
-					aria-label="Toggle navigation">
+						data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+						aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
 
 				<div class="collapse navbar-collapse" id="navbarNavDropdown">
 					<ul class="navbar-nav mx-auto mb-2 mb-lg-0">
 						<li class="nav-item">
-							<a class="nav-link mx-2" id="programme" th:href="@{/shows}">Programmes</a>
+							<a class="nav-link mx-2" id="programme" th:text="#{HeaderProgramme.message}"
+							   th:href="@{/shows}">Programmes</a>
 						</li>
-
 					</ul>
 				</div>
-
-				<ul class="navbar-nav">
+				<div class="d-flex flex-column fs-6">
+				<ul class="navbar-nav m-0 p-0">
 					<li th:if="${#authorization.expression('isAuthenticated()')}" class="nav-item">
-						<a class="nav-link fs-6" th:href="@{/account}"><i class="fa-regular fa-circle-user"></i>
-							Mon Compte </a>
+						<a class="nav-link fs-6" th:href="@{/account}">
+							<i class="fa-regular fa-circle-user"></i>
+							<span th:text="#{HeaderCompte.message}"></span>
+						</a>
 					</li>
 					<li th:if="${#authorization.expression('isAuthenticated()')}" class="nav-item">
-						<a class="nav-link fs-6" th:href="@{/logout}"><i class="fa-solid fa-right-from-bracket"></i>
-							Déconnexion</a>
+						<a class="nav-link fs-6" th:href="@{/logout}">
+							<i class="fa-solid fa-right-from-bracket"></i>
+							<span th:text="#{HeaderLogout.message}"></span>
+
+						</a>
 					</li>
 					<li th:if="${#authorization.expression('!isAuthenticated()')}" class="nav-item">
-						<a class="nav-link fs-6" th:href="@{/login}"><i class="fa-solid fa-right-to-bracket"></i> Se
-							Connecter</a>
+						<a class="nav-link fs-6" th:href="@{/login}">
+							<i class="fa-solid fa-right-to-bracket"></i>
+							<span th:text="#{HeaderLogin.message}"></span>
+						</a>
 					</li>
 					<li th:if="${#authorization.expression('!isAuthenticated()')}" class="nav-item">
-						<a class="nav-link fs-6" th:href="@{/register}"><i class="fa-solid fa-file-signature"></i>
-							Inscription</a>
+						<a class="nav-link fs-6" th:href="@{/register}">
+							<i class="fa-solid fa-file-signature"></i>
+							<span th:text="#{HeaderRegister.message}"></span>
+						</a>
 					</li>
-
 				</ul>
-				<ul class="navbar-nav">
 
 
-					<li><a th:href="@{/change-lang?lang=fr}">FR</a></li><span> - </span>
-					<li><a th:href="@{/change-lang?lang=en}">EN</a></li>
-
-
+				<ul class="navbar-nav m-0 p-0 justify-content-end">
+					<li><a th:href="@{/change-lang?lang=fr}"><img class="img-fluid m-1 text-end" src="/images/la-france.png" alt="franceFlag"/></a></li>
+					<li><a th:href="@{/change-lang?lang=en}"><img class="img-fluid m-1 text-end" src="/images/royaume-uni.png" alt="englishFlag"/></a></li>
 				</ul>
+				</div>
 
 			</div>
 		</nav>
-
 	</header>
 
 

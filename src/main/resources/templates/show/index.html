@@ -6,13 +6,13 @@
 </head>
 <body>
 	<div layout:fragment="content" class="container">
-		<div class="row mt-2">
+		<div class="row m-4">
 
 			<aside id="aside" class="col-md-3 mt-5">
-				<h5>Recherche avancées</h5>
+				<h5 th:text="#{listRecherche.message}">Recherche avancées</h5>
 				<div class="h-100">
 					<li class="sidebar-item">
-						<a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse"
+						<a th:text="#{listTrier.message}" class="sidebar-link collapsed" data-bs-toggle="collapse"
 							data-bs-target="#sortByOptions" aria-expanded="false" aria-controls="sortByOptions">
 							<i class="fa-solid fa-arrow-up-a-z"></i>
 							Trier
@@ -42,7 +42,7 @@
 					</li>
 
 					<li class="sidebar-item">
-						<a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse"
+						<a th:text="#{listFiltrer.message}" class="sidebar-link collapsed" data-bs-toggle="collapse"
 							data-bs-target="#filterOptions" aria-expanded="false" aria-controls="filterOptions">
 							<i class="fa-solid fa-sort"></i>
 							Filtrer
@@ -87,16 +87,15 @@
 
 			<!-- Liste des spectacles à droite -->
 			<div class="col-md-9">
-				<h1>Liste des spectacles</h1>
 
 				<table id="programmeTable" class="table text-light table-borderless">
 					<thead>
-						<tr style="text-align: center;">
+						<tr class="text-center">
 							<th></th>
-							<th class="col-3">Nom</th>
-							<th class="col-2">Prix</th>
-							<th class="col-3">Lieu</th>
-							<th class="col-3">Programmation</th>
+							<th class="col-3" th:text="#{listTitre.message}">Titre</th>
+							<th class="col-2" th:text="#{listPrix.message}">Prix</th>
+							<th class="col-3" th:text="#{listLieu.message}">Lieu</th>
+							<th class="col-3"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -122,7 +121,8 @@
 							<td>
 								<!-- Contenu pour la colonne Disponibilités -->
 								<a th:if="${not #lists.isEmpty(show.representations)}"
-									th:href="@{'/show/' + ${show.id}}" class="custom-list-representation">
+									th:href="@{'/show/' + ${show.id}}" th:text="#{listProgrammation.message}"
+								   class="custom-list-representation">
 									Voir plus
 								</a>
 							</td>

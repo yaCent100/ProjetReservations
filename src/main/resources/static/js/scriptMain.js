@@ -1,32 +1,10 @@
 
-
-//LOGIN
-
-const avousdejouer = document.getElementById('avousdejouer');
-let glowValue = 0;
-let glowIncrement = 1;
-
-function toggleGlow() {
-	if (avousdejouer) {
-		avousdejouer.style.textShadow = `0 0 ${glowValue}px rgba(255, 0, 0, 1)`;
-		glowValue += glowIncrement * 10;
-		if (glowValue >= 20 || glowValue <= 0) {
-			glowIncrement = -glowIncrement;
-		}
-	}
-}
-
-setInterval(toggleGlow, 100);
-
-
 //Programmes Datatable
-
 $(document).ready(function() {
 	var table = $('#programmeTable').DataTable({
 		"paging": true,
 		"pageLength": 5,
 		"lengthChange": false
-		// Autres options DataTables
 	});
 
 	// Tri par titre

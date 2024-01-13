@@ -21,14 +21,12 @@ public class LoginController {
 	
 	@Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-    
 
     @GetMapping("/login")
     public String login(Model model) {
     	
         return "login/login";
     }
-    
     
 
     @PostMapping("/login")
@@ -43,7 +41,10 @@ public class LoginController {
         return "redirect:/login?error";
     }
 
-
+    @GetMapping("/forgot-password")
+    public String forgotPasswordPage() {
+        return "login/forgot-password";
+    }
 
 
 

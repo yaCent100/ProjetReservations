@@ -1,8 +1,7 @@
 package be.iccbxl.pid.reservationsSpringBoot.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -32,11 +32,21 @@ public class User {
     @Column(unique = true)
     @NotBlank(message = "Le login ne peut être vide")
     private String login;
-    
+
+    @NotBlank(message = "Le mot de passe ne peut être vide")
+    @Size(min = 6, message = "Le mot de passe doit contenir au moins 6 caractères")
+    @Pattern(regexp = "^(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).*$", message = "Le mot de passe doit contenir un caractère spécial et une majuscule minimum")
     private String password;
+
+
     private String firstname;
     private String lastname;
+
+    @Column(unique = true)
+    @NotBlank(message = "L'email ne peut être vide")
+    @Email(message = "L'email doit être valide")
     private String email;
+
     private String langue;
     private LocalDateTime created_at;
 
@@ -105,12 +115,6 @@ public class User {
     	return new User();
     }
     
-    public List<Reservation> getReservations() {
-        List<Reservation> reservations = new ArrayList<>();
-        for (Representation representation : representations) {
-            reservations.addAll(representation.getReservations());
-        }
-        return reservations;
-    }
+
 
 }

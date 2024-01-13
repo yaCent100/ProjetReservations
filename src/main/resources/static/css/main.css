@@ -25,6 +25,16 @@ body {
     height: 400px; /* Permet de maintenir les proportions de l'image */
 }
 
+/*LOGIN*/
+
+.red-shadow{
+        box-shadow: 10px 10px 10px 0px rgba(50, 50, 50, 0.8), -10px -10px 10px 0px rgba(50, 50, 50, 0.8);
+}
+.formLogin{
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop: blur(10px);
+}
+
 
 
 

@@ -49,7 +49,7 @@ public class SecurityConfig  {
 				auth.requestMatchers("/css/**", "/js/**", "/images/**", "/change-lang/**").permitAll();
 				auth.requestMatchers("/login", "/register", "/admin/**", "/exportCSV", "rss/shows", 
 						"/confirmationReservation", "/create-payment-intent"
-						,"/stripe/**").permitAll();   
+						,"/stripe/**","/forgot-password").permitAll();
                 auth.anyRequest().authenticated();
 			})
 					

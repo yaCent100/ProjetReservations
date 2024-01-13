@@ -28,9 +28,7 @@ public class ReservationController {
 	
 	@Autowired
 	private RepresentationService representationService;
-	
 
-	
 	@PostMapping("/confirmReservation")
 	public String confirmReservation(@RequestParam("nbPlaces") int nbPlaces, 
 	        @RequestParam("representationWhen") LocalDateTime representationWHen,

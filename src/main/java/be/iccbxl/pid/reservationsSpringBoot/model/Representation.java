@@ -39,7 +39,6 @@ public class Representation {
     @JoinColumn(name="location_id", nullable=true)
     private Location location;
     
-    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(
             name = "reservations",
